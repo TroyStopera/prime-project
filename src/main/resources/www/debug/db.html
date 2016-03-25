@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body {
+				position: absolute;
+				left: 5px;
+				right: 5px;
+			}
+			#output { width: 100%; min-height: 25em; background-color: gray; }
+			form { width: 100%; }
+			#input { width: 75%; }
+		</style>
+		<script src="//code.jquery.com/jquery-2.2.2.min.js"></script>
+	</head>
+	<body>
+		<code><pre id="output"></pre></code>
+		<form>
+			<input id="input" type="text" placeholder="Type an SQL query in here and press ENTER" />
+			<input type="submit" value="Run Query" />
+		</form>
+		
+		<script type="text/javascript">
+			$("form").submit( function(e) {
+				e.preventDefault();
+				var query = $("#input").val();
+				$.ajax({
+					"url": "/debug/dbQuery?q=" +query,
+					"dataType": "text"
+				}).done(function(queryResult) {
+					$("#output").text(queryResult);
+				});
+			} );
+		</script>
+	</body>
+</html>
