@@ -25,3 +25,15 @@ Full Stack Application Engineering Project
   2. Click on `Advanced System Settings`. In the popup window that appears, select the `Advanced` tab > Click on `Environment Variables`. ![Screenshot of Step 2](docs/maven-win-step2.png).
   3. Find the variable named `Path` under `System variables` and click the `Edit` button. ![Screenshot of Step 3](docs/maven-win-step3.png).
   4. Add `;C:\maven\bin` to the end of the value, then click `OK`.
+
+## Directory structure
+- `<project-root>` - run `mvn package exec:java` to compile and run the webserver
+	- `src` - code goes in here
+		- `main`
+			- `java` - Java code goes in here
+			- `resources` - files needed by the webserver that aren't code go in here
+				- `debug/db.html` - the HTML page for the DB query tester
+				- `static` - any files put in here are served from `http://localhost:8080/static/`. So file named `jquery.js` will be accessible from `http://localhost:8080/static/jquery.js`.
+		- `test/java` - Java unit tests go in here
+	- `docs` - documentation goes in here
+	- `target` - maven puts compiled code and jars in here
