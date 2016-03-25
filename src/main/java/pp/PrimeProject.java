@@ -19,7 +19,17 @@ public class PrimeProject
 				halt(404, "File Not Found");
 		});
 
-		get("/", (req, res) -> "Hello Whirled Wide Web!");
+		get("/", (req, res) -> {
+			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/index.html");
+				ByteArrayOutputStream out = new ByteArrayOutputStream() )
+			{
+				res.status(200);
+				res.header("Content-Type", "text/html");
+				Utils.copyStream(in, out);
+				byte[] fileData = out.toByteArray();
+				return new String(fileData, StandardCharsets.UTF_8);
+			}
+		});
 
 		staticRoute("/static", "/www/static");
 
@@ -27,6 +37,8 @@ public class PrimeProject
 			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/debug/db.html");
 				ByteArrayOutputStream out = new ByteArrayOutputStream() )
 			{
+				res.status(200);
+				res.header("Content-Type", "text/html");
 				Utils.copyStream(in, out);
 				byte[] fileData = out.toByteArray();
 				return new String(fileData, StandardCharsets.UTF_8);
