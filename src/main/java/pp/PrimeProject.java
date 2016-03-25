@@ -9,28 +9,30 @@ import static spark.Spark.*;
 public class PrimeProject
 {
 	private static final boolean DEBUG = true; //set this to FALSE in non-development builds
-	
+
 	public static void main(String[] args)
 	{
 		port(8080);
-		
+
 		before("/debug/*", (req, res) -> {
 			if( !DEBUG )
 				halt(404, "File Not Found");
 		});
-		
+
 		get("/", (req, res) -> "Hello Whirled Wide Web!");
-		
+
+		staticRoute("/static", "/www/static");
+
 		get("/debug/db", (req, res) -> {
 			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/debug/db.html");
 				ByteArrayOutputStream out = new ByteArrayOutputStream() )
 			{
-				copyStream(in, out);
+				Utils.copyStream(in, out);
 				byte[] fileData = out.toByteArray();
 				return new String(fileData, StandardCharsets.UTF_8);
 			}
 		});
-		
+
 		get("/debug/dbQuery", (req, res) -> {
 			String query = req.queryParams("q");
 			if( query == null || query.isEmpty() )
@@ -46,31 +48,36 @@ public class PrimeProject
 			}
 		});
 	}
-	
-	private static void copyStream(InputStream in, OutputStream out) throws IOException
+
+	private static void staticRoute(String urlPrefix, String resourceDirectory)
 	{
-		byte[] buf = new byte[1024 * 4];
-		while( true )
-		{
-			int bytesRead = in.read(buf);
-			if( bytesRead == -1 )
-				break;
-			out.write(buf, 0, bytesRead);
-		}
+		get(urlPrefix+ "/*", (req, res) -> {
+			try( InputStream in = PrimeProject.class.getResourceAsStream( resourceDirectory+ "/" +req.splat()[0] ) )
+			{
+				//TODO make sure that the URL doesn't include any ".."s
+				if( in == null )
+					halt(404, "File Not Found");
+
+				res.status(200);
+				res.header("Content-Type", Utils.guessMimeType(req.splat()[0]));
+				byte[] fileData = Utils.getBytesFromStream(in);
+				return new String(fileData, StandardCharsets.UTF_8);
+			}
+		});
 	}
-	
+
 	private static Connection createDBConnection() throws IOException, SQLException
 	{
 		return DriverManager.getConnection("jdbc:derby:memory:myDB;create=true");
 	}
-	
+
 	private static byte[] runQuery(String query)
 	{
 		ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
 		PrintStream out = new PrintStream(byteOut);
-		
+
 		out.printf("Query: %s\n\n", query);
-		
+
 		try( Connection cnt = createDBConnection();
 			Statement stmt = cnt.createStatement() )
 		{
@@ -78,17 +85,17 @@ public class PrimeProject
 			if( hasResultSet )
 			{
 				ResultSet rs = stmt.getResultSet();
-				
+
 				//pretty-print the result set
 				int[] columnWidths = new int[ rs.getMetaData().getColumnCount() ];
 				for( int x = 0; x < columnWidths.length; x++ )
 					columnWidths[x] = rs.getMetaData().getColumnDisplaySize(x+1);
-				
+
 				//column names
 				for( int x = 0; x < columnWidths.length; x++ )
 					out.printf("|%" +columnWidths[x]+ "s|", rs.getMetaData().getColumnName(x+1));
 				out.println();
-				
+
 				//divider
 				for( int x = 0; x < columnWidths.length; x++ )
 				{
@@ -98,7 +105,7 @@ public class PrimeProject
 					out.printf("+");
 				}
 				out.println();
-				
+
 				//row data
 				while( rs.next() )
 				{
@@ -106,7 +113,7 @@ public class PrimeProject
 						out.printf("|%" +columnWidths[x]+ "s|", rs.getObject(x+1).toString());
 					out.println();
 				}
-				
+
 				rs.close();
 			}
 			else
@@ -118,7 +125,7 @@ public class PrimeProject
 		{
 			e.printStackTrace(out);
 		}
-		
+
 		out.flush();
 		return byteOut.toByteArray();
 	}
