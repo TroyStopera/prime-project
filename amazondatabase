@@ -1,28 +1,32 @@
 CREATE DATABASE amazondatabase;
+
 Create TABLE `Item` (
     `Name` varchar(40),
     `Price` INT, /*Or decimal, will look up*/
     `Description` varchar(70),
     `Item_id` varchar(10),
-    Primary Key (Name)
+    Primary Key (Item_id)
 );
 
 CREATE TABLE `Account` (
     `Pass` CHAR(15),
     `Type` VARCHAR(10),
+    `Account_id` INTEGER,
     `Username` VARCHAR(20),
     `Email` VARCHAR(20),
-    PRIMARY KEY (Username)
+    PRIMARY KEY (Account_id)
 );
 ­
-Create TABLE `Cart` (
+Create TABLE `CartEntry` (
+    `ID` INTEGER NOT NULL AUTOINCREMENT,
     `Total` INT,
-    `Items` VARCHAR(100),
+    `Item_id` INTEGER,
+    `Account_id` INTEGER,
     `NumItems` INT,
     PRIMARY KEY (Instance_id) 
 );
 
-Create TABLE `Review` (
+Create TABLE `ItemReview` (
     `Rating` INT,
     `Item_id` VARCHAR(100),
     `Description` VARCHAR(100),
@@ -30,21 +34,27 @@ Create TABLE `Review` (
 );
 
 /*------------------------------------User 1------------------------------*/
-INSERT INTO `Account` VALUES ('LeslieIsPrime','admin','Leslie1','leslie0523@gwu.edu');
+INSERT INTO `Account` VALUES ('LeslieIsPrime','admin','1','Leslie1','leslie0523@gwu.edu');
 
 /*------------------------------------User 2------------------------------*/
-INSERT INTO `Account` VALUES ('GouriIsPrime','user','Gouri2','gouridutta@gwu.edu');
+INSERT INTO `Account` VALUES ('GouriIsPrime','user','23','Gouri2','gouridutta@gwu.edu');
 
 /*------------------------------------User 3------------------------------*/
-INSERT INTO `Account` VALUES ('TroyIsPrime','user','Troy3','troystopera@gwu.edu');
+INSERT INTO `Account` VALUES ('TroyIsPrime','user','20','Troy3','troystopera@gwu.edu');
 
 /*------------------------------------User 4------------------------------*/
-INSERT INTO `Account` VALUES ('ThomasIsPrime','user','Thomas4','garvist@gwu.edu');
+INSERT INTO `Account` VALUES ('ThomasIsPrime','user','10','Thomas4','garvist@gwu.edu');
 
 /*------------------------------------User 5------------------------------*/
-INSERT INTO `Account` VALUES ('WarrenIsPrime','user','Warren5','warrens@gwu.edu');
+INSERT INTO `Account` VALUES ('WarrenIsPrime','user','21','Warren5','warrens@gwu.edu');
 
 
 /*-------------------------------------------ITEM ONE------------------------------*/
 INSERT INTO `Item` VALUES ('temp', '12', 'Will be replaced later.', '27');
 
+INSERT INTO `Item` VALUES ('earplugs', '8', 'Every college student needs one.', '19');
+
+/*-------------------------------------------REVIEW ONE------------------------------*/
+INSERT INTO `ItemReview` VALUES ('5', '27', 'Great item!');
+
+INSERT INTO `ItemReview` VALUES ('4', '19', 'I can now sleep peacefully at night.');
