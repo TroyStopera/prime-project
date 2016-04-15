@@ -15,7 +15,7 @@ public class ItemController extends HTMLController
 		addCSS("/static/item.css");
 		addCSS("/static/homepage.css");
 
-		outputView("/www/views/header.view");
+		outputView("/www/views/header.hbs");
 
 		println("<div class='main-content-wrapper'>");
 		println("<div class='container container-1'>");
@@ -31,6 +31,6 @@ public class ItemController extends HTMLController
 		println("</div>");
 		println("</div>");
 
-		outputView("/www/views/footer.view");
+		outputView("/www/views/footer.hbs");
 	}
 }

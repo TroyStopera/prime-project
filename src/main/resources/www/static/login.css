@@ -1,0 +1,51 @@
+div.login-content-wrapper {
+	box-sizing: border-box;
+	width: 35%;
+	margin-left: 32.5%;
+	margin-right: 32.5%;
+	text-align: center;
+}
+
+div.login-content-wrapper form {
+	display: inline-block;
+	margin: auto;
+	width: 100%;
+}
+
+div.login-content-wrapper form div {
+	width: 100%;
+}
+
+div.login-content-wrapper form div input {
+	display: inline-block;
+	margin-top: .5em;
+}
+
+div.login-content-wrapper form div input[type='text'],
+div.login-content-wrapper form div input[type='password'] {
+	padding: 0.5em;
+	padding-left: 1ch;
+	width: 100%;
+}
+
+div.login-content-wrapper form div input[type='button'],
+div.login-content-wrapper form div input[type='submit'] {
+	border: solid 1px rgba(0,0,0,0);
+	border-radius: 2px;
+	font-style: bold;
+	padding: 2%;
+
+	box-sizing: border-box;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+}
+
+div.login-content-wrapper form div input[type='button']:hover,
+div.login-content-wrapper form div input[type='submit']:hover {
+	border-color: black;
+}
+
+div.login-content-wrapper form div input[type='submit'] {
+	background-color: rgba(255, 128, 64, 0.75);
+}

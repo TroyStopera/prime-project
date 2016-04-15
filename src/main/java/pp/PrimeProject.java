@@ -45,6 +45,14 @@ public class PrimeProject
 			return res.body();
 		});
 
+		get("/login", (req, res) -> {
+			final Controller ctrl = new LoginController();
+			ctrl.initController(req, res);
+			ctrl.executeController();
+			ctrl.deinitController();
+			return res.body();
+		});
+
 		staticRoute("/static", "/www/static");
 
 		get("/debug/db", (req, res) -> {
