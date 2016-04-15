@@ -3,12 +3,14 @@ package pp;
 import java.sql.*;
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.nio.charset.StandardCharsets;
 
 import spark.Request;
 import spark.Response;
 import com.github.jknack.handlebars.*;
 import com.github.jknack.handlebars.context.MapValueResolver;
+import com.github.jknack.handlebars.context.MethodValueResolver;
 
 public abstract class Controller
 {
@@ -18,6 +20,18 @@ public abstract class Controller
 	private final List<String> externalJS = new ArrayList<>();
 	private final List<View> output = new ArrayList<>();
 	private final Map<String, Object> controllerContext = new HashMap<>();
+	private final PageGenerationTimer timer = new PageGenerationTimer();
+
+	private class PageGenerationTimer
+	{
+		private final long start = System.nanoTime();
+		public double secondsToCreatePage()
+		{
+			long nsTime = System.nanoTime() - start;
+			double secTime = nsTime / (double)TimeUnit.SECONDS.toNanos(1);
+			return secTime;
+		}
+	}
 
 	//helper functions
 	protected final Request req() { return req; }
@@ -93,9 +107,10 @@ public abstract class Controller
 
 			//create the context
 			Context ctx = Context
-				.newBuilder( Controller.this.controllerContext )
+				.newBuilder( Controller.this.timer )
+				.combine( Controller.this.controllerContext )
 				.combine( viewContext )
-				.resolver( MapValueResolver.INSTANCE )
+				.resolver( MapValueResolver.INSTANCE, MethodValueResolver.INSTANCE )
 				.build();
 
 			//compile and apply the template
