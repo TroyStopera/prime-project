@@ -20,13 +20,13 @@ public class ItemController extends Controller
 		println("<div class='main-content-wrapper'>");
 		println("<div class='container container-1'>");
 		println("<span class='panel panel-1'>");
-		outputView("/www/views/item.view");
+		outputView("/www/views/item.hbs");
 		println("</span>");
 		println("</div>");
 
 		println("<div class='container container-1'>");
 		println("<span class='panel panel-1'>");
-		outputView("/www/views/reviews.view");
+		outputView("/www/views/reviews.hbs");
 		println("</span>");
 		println("</div>");
 		println("</div>");

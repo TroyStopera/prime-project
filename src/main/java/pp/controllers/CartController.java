@@ -15,8 +15,8 @@ public class CartController extends Controller
 		addCSS("/static/item.css");
 		addCSS("/static/homepage.css");
 
-		outputView("/www/views/header.view");
-		outputView("/www/views/cart.view");
-		outputView("/www/views/footer.view");
+		outputView("/www/views/header.hbs");
+		outputView("/www/views/cart.hbs");
+		outputView("/www/views/footer.hbs");
 	}
 }

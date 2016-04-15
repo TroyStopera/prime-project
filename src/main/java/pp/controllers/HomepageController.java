@@ -17,8 +17,8 @@ public class HomepageController extends Controller
 
 		bindData("isUserLoggedIn", false);
 
-		outputView("/www/views/header.view");
-		outputView("/www/views/homepage.view");
-		outputView("/www/views/footer.view");
+		outputView("/www/views/header.hbs");
+		outputView("/www/views/homepage.hbs");
+		outputView("/www/views/footer.hbs");
 	}
 }
