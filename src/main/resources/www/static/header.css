@@ -1,0 +1,80 @@
+header {
+	box-sizing: border-box;
+}
+header *, header *:before, header *:after {
+	box-sizing: inherit;
+}
+
+header {
+	border: none;
+	border-radius: 5px;
+	background-color: rgba(255, 128, 64, 0.75);
+	width: 100%;
+}
+
+header ul {
+	margin-top: 20px;
+	margin-bottom: 10px;
+	margin-left: 25px;
+	margin-right: 25px;
+
+	list-style-type: none;
+	display: block;
+	padding: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	width: 100%;
+}
+
+header ul li {
+	display: inline-block;
+}
+header ul li a {
+	display: inline-block;
+	text-decoration: none;
+	color: inherit;
+}
+header ul li a:hover {
+	background-color: red;
+}
+header ul li.logo {
+	width: 7%;
+}
+header ul li.search {
+	width: 65%;
+	padding-left: 2px;
+}
+
+header ul li.search form {
+	width: 100%;
+}
+
+header ul li.search form input[type="text"] {
+	width: 90%;
+	border: solid 1px;
+	border-right: none;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-right: 0;
+	padding-left: 1ch;
+	padding-top: .5em;
+	padding-bottom: .5em;
+}
+
+header ul li.search form input[type="submit"] {
+	padding: 0;
+	background-color: yellow;
+	border: solid 1px;
+	border-left: none;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	margin-left: 0;
+}
+
+header ul li.login {
+	width: 7%;
+}
+
+header ul li.cart {
+	width: 7%;
+}

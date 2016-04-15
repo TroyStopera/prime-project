@@ -1,9 +1,96 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Homepage</title>
-	</head>
-	<body>
-		<h1>Homepage</h1>
-	</body>
+<head>
+	<title>Prime</title>
+	<script src="/static/jquery.js"></script>
+	<link href="/static/header.css" rel="stylesheet" type="text/css" />
+	<link href="/static/footer.css" rel="stylesheet" type="text/css" />
+	<link href="/static/panel.css" rel="stylesheet" type="text/css" />
+	<link href="/static/item.css" rel="stylesheet" type="text/css" />
+	<style>
+		div.main-content-wrapper {
+			margin-left: 5%;
+			width: 90%;
+			padding-left: 2%;
+			padding-right: 2%;
+		}
+		span.featured-item {
+		}
+	</style>
+</head>
+<body>
+<header>
+	<ul>
+		<li class="logo"><a href="#">Prime</a></li>
+		<li class="search">
+			<form>
+				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
+			</form>
+		</li>
+
+		<li class="login"><a href="#">Login</a></li>
+		<li class="cart"><a href="#">Cart</a></li>
+	</ul>
+	<script type="text/javascript">
+		//fix form height
+		var hei = Math.max(
+			$("form input[type='text']").outerHeight(),
+			$("form input[type='submit']").outerHeight()
+		);
+		$("form input[type='text']").outerHeight(hei);
+		$("form input[type='submit']").outerHeight(hei);
+
+		//fix li height
+		var hei = 0;
+		$("header ul li").each( function(index, element) {
+			hei = Math.max( hei , $(element).outerHeight() );
+		} );
+
+		$("header ul li").each( function(index, element) {
+			$(element).outerHeight( hei );
+		} );
+	</script>
+</header>
+<div class="main-content-wrapper">
+	<div class="container container-1">
+		<span class="panel panel-1 item">
+			<h3>Today's featured item:</h3>
+			<h1 class="item-name">Widget</h1>
+			<div class="price">
+				<span class="sale-price">$2,999,999</span>
+				<span class="old-price">$3,000,000</span>
+				<span class="sale-desc">(&lt;1% off!)</span>
+			</div>
+			<span>
+				<img class="item-pic" style="float: left; padding-right: 5px" src="/favicon.ico" width="50" height="50" />
+				<span class="item-desc">
+					Features:
+					<ul>
+						<li>Obscenely overpriced</li>
+						<li>Does nothing</li>
+						<li>Why would you buy this?</li>
+					</ul>
+				</span>
+			</span>
+		</span>
+	</div>
+
+	<div class="container container-1">
+		<span class="panel panel-3 popular1">
+			POPULAR ITEM 1
+		</span>
+
+		<span class="panel panel-3 popular2">
+			POPULAR ITEM 2
+		</span>
+
+		<span class="panel panel-3 popular3">
+			POPULAR ITEM 3
+		</span>
+	</div>
+</div>
+<footer>
+	<p><a href="https://github.com/TroyStopera/prime-project">Made by the Primes Team</a>.</p>
+</footer>
+</body>
 </html>

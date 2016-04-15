@@ -1,0 +1,36 @@
+.container {
+	display: inline-block;
+	width: 100%;
+	margin-top: 1em;
+}
+
+.container > .panel {
+	float: left;
+}
+
+.container-1 {
+}
+
+.panel {
+	display: inline-block;
+	border: none;
+	border-radius: 5px;
+	background-color: rgba(255, 128, 64, 0.75);
+
+	margin-left: 2px;
+	margin-right: 2px;
+
+	padding: 5px;
+}
+
+.panel-1 {
+	width: 100%;
+}
+
+.panel-2 {
+	width: 50%;
+}
+
+.panel-3 {
+	width: 32%;
+}

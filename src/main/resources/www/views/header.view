@@ -1,0 +1,32 @@
+<header>
+	<ul>
+		<li class="logo"><a href="#">Prime</a></li>
+		<li class="search">
+			<form>
+				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
+			</form>
+		</li>
+
+		<li class="login"><a href="#">Login</a></li>
+		<li class="cart"><a href="#">Cart</a></li>
+	</ul>
+	<script type="text/javascript">
+		//fix form height
+		var hei = Math.max(
+			$("form input[type='text']").outerHeight(),
+			$("form input[type='submit']").outerHeight()
+		);
+		$("form input[type='text']").outerHeight(hei);
+		$("form input[type='submit']").outerHeight(hei);
+
+		//fix li height
+		var hei = 0;
+		$("header ul li").each( function(index, element) {
+			hei = Math.max( hei , $(element).outerHeight() );
+		} );
+
+		$("header ul li").each( function(index, element) {
+			$(element).outerHeight( hei );
+		} );
+	</script>
+</header>

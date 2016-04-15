@@ -1,5 +1,7 @@
 package pp;
 
+import pp.controllers.*;
+
 import java.sql.*;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -20,15 +22,21 @@ public class PrimeProject
 		});
 
 		get("/", (req, res) -> {
-			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/index.html");
-				ByteArrayOutputStream out = new ByteArrayOutputStream() )
-			{
-				res.status(200);
-				res.header("Content-Type", "text/html");
-				Utils.copyStream(in, out);
-				byte[] fileData = out.toByteArray();
-				return new String(fileData, StandardCharsets.UTF_8);
-			}
+			final Controller ctrl = new HomepageController();
+			ctrl.initController(req, res);
+			ctrl.generatePage();
+			ctrl.finalizePageGeneration();
+			ctrl.deinitController();
+			return res.body();
+		});
+
+		get("/cart", (req, res) -> {
+			final Controller ctrl = new CartController();
+			ctrl.initController(req, res);
+			ctrl.generatePage();
+			ctrl.finalizePageGeneration();
+			ctrl.deinitController();
+			return res.body();
 		});
 
 		staticRoute("/static", "/www/static");

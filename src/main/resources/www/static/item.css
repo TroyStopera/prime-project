@@ -1,0 +1,23 @@
+.item .price {
+	font-size: 1.25em;
+}
+
+.item .price .sale-price {
+}
+.item .price .old-price {
+	text-decoration: line-through;
+	font-size: 0.7em;
+}
+.item .price .sale-desc {
+}
+
+.item .item-name {
+	font-style: bold;
+}
+
+.item .item-pic {
+}
+
+.item .item-desc {
+	display: inline-block;
+}

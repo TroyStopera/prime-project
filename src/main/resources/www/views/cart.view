@@ -1,0 +1,17 @@
+<div class="main-content-wrapper">
+	<div class="container container-1">
+		<span class="panel panel-1">
+			<h1>Total: $0.00</h1>
+			<form>
+				<input type="button" value="Proceed to checkout" />
+			</form>
+		</span>
+	</div>
+
+	<div class="container container-1">
+		<span class="panel panel-1">
+			<h1>Item 1</h1>
+			<p>Item Desc</p>
+		</span>
+	</div>
+</div>

@@ -1,0 +1,38 @@
+<div class="main-content-wrapper">
+	<div class="container container-1">
+		<span class="panel panel-1 item">
+			<h3>Today's featured item:</h3>
+			<h1 class="item-name">Widget</h1>
+			<div class="price">
+				<span class="sale-price">$2,999,999</span>
+				<span class="old-price">$3,000,000</span>
+				<span class="sale-desc">(&lt;1% off!)</span>
+			</div>
+			<span>
+				<img class="item-pic" style="float: left; padding-right: 5px" src="/favicon.ico" width="50" height="50" />
+				<span class="item-desc">
+					Features:
+					<ul>
+						<li>Obscenely overpriced</li>
+						<li>Does nothing</li>
+						<li>Why would you buy this?</li>
+					</ul>
+				</span>
+			</span>
+		</span>
+	</div>
+
+	<div class="container container-1">
+		<span class="panel panel-3 popular1">
+			POPULAR ITEM 1
+		</span>
+
+		<span class="panel panel-3 popular2">
+			POPULAR ITEM 2
+		</span>
+
+		<span class="panel panel-3 popular3">
+			POPULAR ITEM 3
+		</span>
+	</div>
+</div>
