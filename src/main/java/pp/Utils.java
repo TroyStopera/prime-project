@@ -1,6 +1,7 @@
 package pp;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Utils
 {
@@ -43,6 +44,19 @@ public class Utils
 			case "css": return "text/css";
 			case "js": return "text/javascript";
 			default: return "text/plain";
+		}
+	}
+
+	public static String getFileText(InputStream in) throws IOException
+	{
+		try( ByteArrayOutputStream out = new ByteArrayOutputStream() )
+		{
+			if( in == null )
+				throw new FileNotFoundException();
+
+			Utils.copyStream(in, out);
+			byte[] fileData = out.toByteArray();
+			return new String(fileData, StandardCharsets.UTF_8);
 		}
 	}
 }

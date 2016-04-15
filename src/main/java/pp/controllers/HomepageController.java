@@ -15,6 +15,8 @@ public class HomepageController extends Controller
 		addCSS("/static/item.css");
 		addCSS("/static/homepage.css");
 
+		bindData("isUserLoggedIn", false);
+
 		outputView("/www/views/header.view");
 		outputView("/www/views/homepage.view");
 		outputView("/www/views/footer.view");

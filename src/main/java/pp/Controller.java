@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 import spark.Request;
 import spark.Response;
+import com.github.jknack.handlebars.*;
+import com.github.jknack.handlebars.context.MapValueResolver;
 
 public abstract class Controller
 {
@@ -14,7 +16,8 @@ public abstract class Controller
 	private Response res;
 	private final List<String> externalCSS = new ArrayList<>();
 	private final List<String> externalJS = new ArrayList<>();
-	private final List<String> output = new ArrayList<>();
+	private final List<View> output = new ArrayList<>();
+	private final Map<String, Object> controllerContext = new HashMap<>();
 
 	//helper functions
 	protected final Request req() { return req; }
@@ -30,22 +33,75 @@ public abstract class Controller
 		externalJS.add( jsURL );
 	}
 
-	protected final void println(String line)
+	protected final void bindData(String key, Object value)
 	{
-		output.add( line+ "\n" );
+		controllerContext.put( key, value );
 	}
 
-	protected final void outputView(String viewResource) throws IOException
+	protected final void println(String line)
 	{
-		try( InputStream in = PrimeProject.class.getResourceAsStream( viewResource );
-			ByteArrayOutputStream out = new ByteArrayOutputStream() )
-		{
-			if( in == null )
-				throw new FileNotFoundException();
+		output.add( new TextView(line+ "\n") );
+	}
 
-			Utils.copyStream(in, out);
-			byte[] fileData = out.toByteArray();
-			output.add( new String(fileData, StandardCharsets.UTF_8) );
+	protected final HandlebarsView outputView(String viewResource) throws IOException
+	{
+		final HandlebarsView v = new HandlebarsView(viewResource);
+		output.add( v );
+		return v;
+	}
+
+	private interface View
+	{
+		String get() throws Exception;
+	}
+
+	private class TextView implements View
+	{
+		private final String text;
+
+		private TextView(String text)
+		{
+			this.text = text;
+		}
+
+		public String get()
+		{
+			return text;
+		}
+	}
+
+	protected class HandlebarsView implements View
+	{
+		private final String viewResource;
+		private final Map<String, Object> viewContext = new HashMap<>();
+
+		private HandlebarsView(String viewResource)
+		{
+			this.viewResource = viewResource;
+		}
+
+		public HandlebarsView bindData(String key, Object value)
+		{
+			viewContext.put( key, value );
+			return this;
+		}
+
+		public String get() throws IOException
+		{
+			//get the template
+			String templateText = Utils.getFileText( PrimeProject.class.getResourceAsStream( viewResource ) );
+
+			//create the context
+			Context ctx = Context
+				.newBuilder( Controller.this.controllerContext )
+				.combine( viewContext )
+				.resolver( MapValueResolver.INSTANCE )
+				.build();
+
+			//compile and apply the template
+			final Handlebars hbs = new Handlebars();
+			Template template = hbs.compileInline( templateText );
+			return template.apply( ctx );
 		}
 	}
 
@@ -58,7 +114,7 @@ public abstract class Controller
 
 	public abstract void generatePage() throws Exception;
 
-	final void finalizePageGeneration()
+	final void finalizePageGeneration() throws Exception
 	{
 		String page = "";
 		page += "<!DOCTYPE html>\n";
@@ -74,8 +130,8 @@ public abstract class Controller
 		page += "</head>\n";
 		page += "<body>\n";
 
-		for( Object obj : output )
-			page += obj.toString();
+		for( View v : output )
+			page += v.get();
 
 		page += "</body>\n";
 		page += "</html>\n";
