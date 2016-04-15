@@ -39,6 +39,15 @@ public class PrimeProject
 			return res.body();
 		});
 
+		get("/item/:id", (req, res) -> {
+			final Controller ctrl = new ItemController();
+			ctrl.initController(req, res);
+			ctrl.generatePage();
+			ctrl.finalizePageGeneration();
+			ctrl.deinitController();
+			return res.body();
+		});
+
 		staticRoute("/static", "/www/static");
 
 		get("/debug/db", (req, res) -> {
