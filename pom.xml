@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 			http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>fullstack.primeproject</groupId>
 	<artifactId>prime-project</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	
+
 	<!-- dependencies -->
 	<dependencies>
 		<!-- SparkJava -->
@@ -17,7 +17,7 @@
 			<artifactId>spark-core</artifactId>
 			<version>2.3</version>
 		</dependency>
-		
+
 		<!-- Apache Derby -->
 		<dependency>
 			<groupId>org.apache.derby</groupId>
@@ -25,14 +25,21 @@
 			<version>10.12.1.1</version>
 		</dependency>
 
-        <!-- Google Gson (JSON Lib) -->
+    <!-- Google Gson (JSON Lib) -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.6.2</version>
 		</dependency>
+
+		<!-- Handlebars.java (HTML templating) -->
+		<dependency>
+			<groupId>com.github.jknack</groupId>
+			<artifactId>handlebars</artifactId>
+			<version>4.0.5</version>
+		</dependency>
 	</dependencies>
-	
+
 	<!-- base build settings -->
 	<build>
 		<defaultGoal>package</defaultGoal>
@@ -80,7 +87,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<!-- project properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
