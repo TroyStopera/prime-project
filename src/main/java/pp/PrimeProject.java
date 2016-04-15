@@ -10,7 +10,7 @@ import static spark.Spark.*;
 
 public class PrimeProject
 {
-	private static final boolean DEBUG = true; //set this to FALSE in non-development builds
+	private static final boolean DEBUG = false; //set this to FALSE in non-development builds
 
 	public static void main(String[] args)
 	{
@@ -60,6 +60,12 @@ public class PrimeProject
 		});
 
 		get("/debug/dbQuery", (req, res) -> {
+			final Controller ctrl = new DBQueryDebugController();
+			ctrl.initController(req, res);
+			ctrl.executeController();
+			ctrl.deinitController();
+			return res.body();
+			/*
 			String query = req.queryParams("q");
 			if( query == null || query.isEmpty() )
 			{
@@ -71,7 +77,7 @@ public class PrimeProject
 				res.status(200);
 				res.type("text/plain");
 				return new String( runQuery(query), StandardCharsets.UTF_8 );
-			}
+			}*/
 		});
 	}
 
@@ -92,7 +98,7 @@ public class PrimeProject
 		});
 	}
 
-	private static Connection createDBConnection() throws IOException, SQLException
+	public static Connection createDBConnection() throws IOException, SQLException
 	{
 		return DriverManager.getConnection("jdbc:derby:memory:myDB;create=true");
 	}
