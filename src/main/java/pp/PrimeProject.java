@@ -24,8 +24,7 @@ public class PrimeProject
 		get("/", (req, res) -> {
 			final Controller ctrl = new HomepageController();
 			ctrl.initController(req, res);
-			ctrl.generatePage();
-			ctrl.finalizePageGeneration();
+			ctrl.executeController();
 			ctrl.deinitController();
 			return res.body();
 		});
@@ -33,8 +32,7 @@ public class PrimeProject
 		get("/cart", (req, res) -> {
 			final Controller ctrl = new CartController();
 			ctrl.initController(req, res);
-			ctrl.generatePage();
-			ctrl.finalizePageGeneration();
+			ctrl.executeController();
 			ctrl.deinitController();
 			return res.body();
 		});
@@ -42,8 +40,7 @@ public class PrimeProject
 		get("/item/:id", (req, res) -> {
 			final Controller ctrl = new ItemController();
 			ctrl.initController(req, res);
-			ctrl.generatePage();
-			ctrl.finalizePageGeneration();
+			ctrl.executeController();
 			ctrl.deinitController();
 			return res.body();
 		});

@@ -1,12 +1,12 @@
 package pp.controllers;
 
 import pp.PrimeProject;
-import pp.Controller;
+import pp.HTMLController;
 import pp.Utils;
 
-public class CartController extends Controller
+public class CartController extends HTMLController
 {
-	public void generatePage() throws Exception
+	protected void generatePage() throws Exception
 	{
 		addJS("/static/jquery.js");
 		addCSS("/static/header.css");
