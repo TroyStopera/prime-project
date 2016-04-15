@@ -16,10 +16,10 @@ public class LoginController extends HTMLController
 		addCSS("/static/homepage.css");
 		addCSS("/static/login.css");
 
+		bindData("isLoginPage", true);
+
 		outputView("/www/views/header.hbs");
-
 		outputView("/www/views/login.hbs");
-
 		outputView("/www/views/footer.hbs");
 	}
 }

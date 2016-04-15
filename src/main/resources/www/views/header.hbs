@@ -1,14 +1,17 @@
 <header>
 	<ul>
-		<li class="logo"><a href="#">Prime</a></li>
+		<li class="logo"><a href="/">Prime</a></li>
 		<li class="search">
 			<form>
 				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
 			</form>
 		</li>
 
-		<li class="login"><a href="#">Login</a></li>
-		<li class="cart"><a href="#">Cart</a></li>
+		{{#if isLoginPage}}
+		{{else}}
+		<li class="login"><a href="/login">Login</a></li>
+		<li class="cart"><a href="/cart">Cart</a></li>
+		{{/if}}
 	</ul>
 	<script type="text/javascript">
 		//fix form height
