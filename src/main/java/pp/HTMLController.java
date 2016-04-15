@@ -146,6 +146,8 @@ public abstract class HTMLController extends Controller
 		page += "</body>\n";
 		page += "</html>\n";
 
+		res().status(200);
+		res().header("Content-Type", "text/html;charset=utf-8");
 		res().body( page );
 	}
 }
