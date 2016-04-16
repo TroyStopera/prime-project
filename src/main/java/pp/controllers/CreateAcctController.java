@@ -1,14 +1,13 @@
 package pp.controllers;
 
-import pp.PrimeProject;
 import pp.HTMLController;
-import pp.Utils;
 
 public class CreateAcctController extends HTMLController
 {
 	protected void generatePage() throws Exception
 	{
 		addJS("/static/jquery.js");
+		addJS("/static/primes.js");
 		addCSS("/static/header.css");
 		addCSS("/static/footer.css");
 		addCSS("/static/panel.css");
