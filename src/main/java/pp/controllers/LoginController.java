@@ -1,8 +1,6 @@
 package pp.controllers;
 
-import pp.PrimeProject;
 import pp.HTMLController;
-import pp.Utils;
 
 public class LoginController extends HTMLController
 {
@@ -17,6 +15,15 @@ public class LoginController extends HTMLController
 		addCSS("/static/login.css");
 
 		bindData("isLoginPage", true);
+
+		if( req().queryParams("reason") != null )
+			bindData("previousLoginFailed", true);
+
+		String returnTo = req().queryParams("returnTo");
+		if( returnTo == null )
+			returnTo = "/";
+
+		bindData("returnTo", returnTo);
 
 		outputView("/www/views/header.hbs");
 		outputView("/www/views/login.hbs");

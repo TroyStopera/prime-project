@@ -30,6 +30,45 @@ public abstract class Controller
 		return sessionToken;
 	}
 
+	/**
+	 * Attempts to log the user in.
+	 * @return true if the user is logged in, false if the user supplied the wrong credentials
+	 * @throws Exception if login failed due to server errors
+	 */
+	protected final boolean login(String username, String password, String salt) throws Exception
+	{
+		if( sm.login(req, res, username, password, salt) )
+		{
+			sessionToken = sm.getSessionToken(req, res);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/** Logs the user out */
+	protected final void logout()
+	{
+		sm.logout(req, res);
+		sessionToken = sm.getSessionToken(req, res);
+	}
+
+	/** @return true if the user is logged in */
+	protected boolean isUserLoggedIn()
+	{
+		//TODO implement
+		return false;
+	}
+
+	/** @return the logged in user's username (or "" is the user isn't logged in) */
+	protected String username()
+	{
+		//TODO implement
+		return "";
+	}
+
 	//lifecycle functions
 	final void initController(Request req, Response res, SessionManager sm)
 	{

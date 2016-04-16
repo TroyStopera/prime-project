@@ -66,6 +66,23 @@ public class SessionManager
 		return getSessionToken(req, res);
 	}
 
+	/**
+	 * Attempts to log the user in.
+	 * @return true if login was successful, false if it failed
+	 * @throws Exception if login failed due to server errors
+	 */
+	public boolean login(Request req, Response res, String username, String password, String salt) throws Exception
+	{
+		//TODO implement! -- @Troy: what does the Accounts table look like on the database?
+		return false;
+	}
+
+	/** Logs the user out */
+	public void logout(Request req, Response res)
+	{
+		//TODO implement!
+	}
+
 	private String generateCookie()
 	{
 		byte[] b = new byte[ sessionKeyLengthInBytes ];

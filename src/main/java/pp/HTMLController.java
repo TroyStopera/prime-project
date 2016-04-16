@@ -1,16 +1,17 @@
 package pp;
 
-import java.sql.*;
-import java.io.*;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.nio.charset.StandardCharsets;
-
-import spark.Request;
-import spark.Response;
-import com.github.jknack.handlebars.*;
+import com.github.jknack.handlebars.Context;
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Template;
 import com.github.jknack.handlebars.context.MapValueResolver;
 import com.github.jknack.handlebars.context.MethodValueResolver;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public abstract class HTMLController extends Controller
 {
@@ -118,6 +119,9 @@ public abstract class HTMLController extends Controller
 	//lifecycle functions
 	public final void executeController() throws Exception
 	{
+		bindData("isUserLoggedIn", isUserLoggedIn());
+		bindData("username", username());
+		bindData("url", req().pathInfo());
 		generatePage();
 		finalizePageGeneration();
 	}

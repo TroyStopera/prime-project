@@ -7,11 +7,14 @@
 			</form>
 		</li>
 
-		{{#if isLoginPage}}
-		{{else}}
-		<li class="login"><a href="/login">Login</a></li>
+		{{#unless isLoginPage}}
+			{{#if isUserLoggedIn}}
+				<li class="login"><a href="/performLogout?returnTo={{url}}">Login</a></li>
+			{{^}}
+				<li class="login"><a href="/login?returnTo={{url}}">Login</a></li>
+			{{/if}}
 		<li class="cart"><a href="/cart">Cart</a></li>
-		{{/if}}
+		{{/unless}}
 	</ul>
 	<script type="text/javascript">
 		//fix form height
