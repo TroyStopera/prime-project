@@ -74,6 +74,12 @@ public class PrimeProject
 			ctrl.deinitController();
 			return res.body();
 		});
+
+		after( (req, res) -> {
+			//does the user support gzip?
+			if( req.headers("Accept-Encoding") != null && req.headers("Accept-Encoding").contains("gzip") )
+				res.header("Content-Encoding", "gzip");
+		} );
 	}
 
 	private static void staticRoute(String urlPrefix, String resourceDirectory)
