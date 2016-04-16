@@ -9,10 +9,13 @@ public abstract class Controller
 	private Response res;
 	private SessionManager sm;
 	private String sessionToken;
+	private BusinessLogic bl;
 
 	//helper functions
 	protected final Request req() { return req; }
 	protected final Response res() { return res; }
+
+	protected final BusinessLogic bl() { return bl; }
 
 	/**
 	 * The user's current session token. Use this to identify the user across requests.
@@ -76,6 +79,7 @@ public abstract class Controller
 		this.res = res;
 		this.sm = sm;
 		this.sessionToken = sm.getSessionToken(req, res);
+		this.bl = new BusinessLogic(this);
 	}
 
 	public abstract void executeController() throws Exception;

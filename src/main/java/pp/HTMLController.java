@@ -122,6 +122,10 @@ public abstract class HTMLController extends Controller
 		bindData("isUserLoggedIn", isUserLoggedIn());
 		bindData("username", username());
 		bindData("url", req().pathInfo());
+
+		bindData("cartCount", bl().getCartCount());
+		bindData("cartTotal", bl().getCartTotal());
+
 		generatePage();
 		finalizePageGeneration();
 	}

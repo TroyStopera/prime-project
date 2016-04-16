@@ -35,6 +35,8 @@ public class PrimeProject
 
 		get("/item/:id", (req, res) -> useController( new ItemController(), req, res ) );
 
+		get("/itemImage/:id", (req, res) -> useController( new ItemImageController(), req, res ) );
+
 		get("/login", (req, res) -> useController( new LoginController(), req, res ) );
 
 		get("/createAccount", (req, res) -> useController( new CreateAcctController(), req, res ) );
