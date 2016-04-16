@@ -1,11 +1,12 @@
 <div class="login-content-wrapper">
-	<h1>Login to Prime</h1>
-	<form action="/performLogin" method="POST">
+	<h1>Create a Prime account</h1>
+	<form action="/performAcctCreate" method="POST">
+		<div><input type="email" name="email" placeholder="Email" /></div>
 		<div><input type="text" name="username" placeholder="Username" /></div>
 		<div><input type="password" name="password" placeholder="Password" /></div>
+		<div><input type="password" placeholder="Confirm Password" /></div>
 		<div>
-			<input type="submit" value="Login" onsubmit="return false;" />
-			<input type="button" value="Create Account" />
+			<input type="submit" value="Create Account" onsubmit="return false;" style="width: 65%" />
 		</div>
 	</form>
 
@@ -13,11 +14,6 @@
 		$("div.login-content-wrapper form input[type='submit']").submit( function(e) {
 			e.preventDefault();
 			return false;
-		} );
-
-		$("div.login-content-wrapper form input[type='button']").click( function(e) {
-			e.preventDefault();
-			window.location = "/createAccount";
 		} );
 	</script>
 </div>

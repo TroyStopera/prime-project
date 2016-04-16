@@ -22,6 +22,7 @@ div.login-content-wrapper form div input {
 }
 
 div.login-content-wrapper form div input[type='text'],
+div.login-content-wrapper form div input[type='email'],
 div.login-content-wrapper form div input[type='password'] {
 	padding: 0.5em;
 	padding-left: 1ch;

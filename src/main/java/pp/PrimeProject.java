@@ -53,6 +53,14 @@ public class PrimeProject
 			return res.body();
 		});
 
+		get("/createAccount", (req, res) -> {
+			final Controller ctrl = new CreateAcctController();
+			ctrl.initController(req, res);
+			ctrl.executeController();
+			ctrl.deinitController();
+			return res.body();
+		});
+
 		staticRoute("/static", "/www/static");
 
 		get("/debug/db", (req, res) -> {
