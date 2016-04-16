@@ -16,10 +16,13 @@ import static spark.Spark.*;
 public class PrimeProject
 {
 	private static final boolean DEBUG = true; //set this to FALSE in non-development builds
+	private static SessionManager sm;
 
 	public static void main(String[] args)
 	{
 		port(8080);
+
+		sm = new SessionManager();
 
 		before("/debug/*", (req, res) -> {
 			if( !DEBUG )
@@ -75,7 +78,7 @@ public class PrimeProject
 
 	private static String useController(final Controller ctrl, final Request req, final Response res) throws Exception
 	{
-		ctrl.initController(req, res);
+		ctrl.initController(req, res, sm);
 		ctrl.executeController();
 		ctrl.deinitController();
 		return res.body();
