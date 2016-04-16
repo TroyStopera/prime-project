@@ -5,13 +5,6 @@ import java.nio.charset.StandardCharsets;
 
 public class Utils
 {
-	public static byte[] getBytesFromStream(InputStream in) throws IOException
-	{
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		copyStream(in, out);
-		return out.toByteArray();
-	}
-
 	public static void copyStream(InputStream in, OutputStream out) throws IOException
 	{
 		byte[] buf = new byte[ 1024 * 4 ];
@@ -45,6 +38,13 @@ public class Utils
 			case "js": return "text/javascript";
 			default: return "text/plain";
 		}
+	}
+
+	public static byte[] getFileBytes(InputStream in) throws IOException
+	{
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		copyStream(in, out);
+		return out.toByteArray();
 	}
 
 	public static String getFileText(InputStream in) throws IOException

@@ -1,12 +1,14 @@
 package pp.controllers;
 
-import pp.PrimeProject;
 import pp.Controller;
-import pp.Utils;
+import pp.PrimeProject;
 
-import java.sql.*;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 import static spark.Spark.halt;
 
@@ -14,7 +16,7 @@ public class DBQueryDebugController extends Controller
 {
 	public void executeController() throws Exception
 	{
-		String query = req.queryParams("q");
+		String query = req().queryParams("q");
 		if( query == null || query.isEmpty() )
 		{
 			halt(404, "File not found");

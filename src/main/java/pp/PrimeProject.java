@@ -1,10 +1,15 @@
 package pp;
 
 import pp.controllers.*;
+import spark.Request;
+import spark.Response;
 
-import java.sql.*;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import static spark.Spark.*;
 
@@ -21,73 +26,35 @@ public class PrimeProject
 				halt(404, "File Not Found");
 		});
 
-		get("/", (req, res) -> {
-			final Controller ctrl = new HomepageController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/", (req, res) -> useController( new HomepageController(), req, res ) );
 
-		get("/cart", (req, res) -> {
-			final Controller ctrl = new CartController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/cart", (req, res) -> useController( new CartController(), req, res ) );
 
-		get("/item/:id", (req, res) -> {
-			final Controller ctrl = new ItemController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/item/:id", (req, res) -> useController( new ItemController(), req, res ) );
 
-		get("/login", (req, res) -> {
-			final Controller ctrl = new LoginController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/login", (req, res) -> useController( new LoginController(), req, res ) );
 
-		get("/createAccount", (req, res) -> {
-			final Controller ctrl = new CreateAcctController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/createAccount", (req, res) -> useController( new CreateAcctController(), req, res ) );
 
 		staticRoute("/static", "/www/static");
 
 		get("/debug/db", (req, res) -> {
 			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/debug/db.html");
-				ByteArrayOutputStream out = new ByteArrayOutputStream() )
+			     ByteArrayOutputStream out = new ByteArrayOutputStream() )
 			{
 				res.status(200);
 				res.header("Content-Type", "text/html");
-				Utils.copyStream(in, out);
-				byte[] fileData = out.toByteArray();
-				return new String(fileData, StandardCharsets.UTF_8);
+				return Utils.getFileText( in );
 			}
 		});
 
-		get("/debug/dbQuery", (req, res) -> {
-			final Controller ctrl = new DBQueryDebugController();
-			ctrl.initController(req, res);
-			ctrl.executeController();
-			ctrl.deinitController();
-			return res.body();
-		});
+		get("/debug/dbQuery", (req, res) -> useController( new DBQueryDebugController(), req, res ) );
 
-		after( (req, res) -> {
+		after((req, res) -> {
 			//does the user support gzip?
 			if( req.headers("Accept-Encoding") != null && req.headers("Accept-Encoding").contains("gzip") )
 				res.header("Content-Encoding", "gzip");
-		} );
+		});
 	}
 
 	private static void staticRoute(String urlPrefix, String resourceDirectory)
@@ -101,10 +68,17 @@ public class PrimeProject
 
 				res.status(200);
 				res.header("Content-Type", Utils.guessMimeType(req.splat()[0]));
-				byte[] fileData = Utils.getBytesFromStream(in);
-				return new String(fileData, StandardCharsets.UTF_8);
+				return Utils.getFileText( in );
 			}
 		});
+	}
+
+	private static String useController(final Controller ctrl, final Request req, final Response res) throws Exception
+	{
+		ctrl.initController(req, res);
+		ctrl.executeController();
+		ctrl.deinitController();
+		return res.body();
 	}
 
 	public static Connection createDBConnection() throws IOException, SQLException
