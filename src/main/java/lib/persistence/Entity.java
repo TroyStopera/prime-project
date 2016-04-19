@@ -8,7 +8,7 @@ public abstract class Entity {
 
     protected static final Gson gson = new Gson();
 
-    long id = -1;
+    protected long id = -1;
 
     public long getId() {
         return id;

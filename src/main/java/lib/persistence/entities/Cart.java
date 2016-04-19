@@ -3,19 +3,16 @@ package lib.persistence.entities;
 import lib.persistence.DataAccessException;
 import lib.persistence.Entity;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 public class Cart extends Entity {
 
     private final long accountId;
-    private final Set<CartItem> items = new HashSet<>();
+    private final HashMap<Long, CartItem> items = new HashMap<>();
 
-    public Cart(long accountId, Collection<CartItem> items) {
+    public Cart(long accountId) {
         this.accountId = accountId;
-        this.items.addAll(items);
+        this.id = accountId;
     }
 
     public long getAccountId() {
@@ -23,7 +20,15 @@ public class Cart extends Entity {
     }
 
     public Set<CartItem> getItems() {
-        return items;
+        return new HashSet<>(items.values());
+    }
+
+    public void updateCart(long itemId, int quantity) {
+        if (quantity <= 0) items.remove(itemId);
+        else {
+            CartItem item = new CartItem(itemId, quantity);
+            items.put(itemId, item);
+        }
     }
 
     public static Cart fromJson(String json) {
@@ -32,16 +37,16 @@ public class Cart extends Entity {
 
     public static class CartItem {
 
-        private final Item item;
+        private final long itemId;
         private int quantity;
 
-        public CartItem(Item item, int quantity) {
-            this.item = item;
+        public CartItem(long itemId, int quantity) {
+            this.itemId = itemId;
             this.quantity = quantity;
         }
 
-        public Item getItem() {
-            return item;
+        public long getItemId() {
+            return itemId;
         }
 
         public int getQuantity() {
@@ -54,10 +59,11 @@ public class Cart extends Entity {
 
     }
 
-    public interface DAO extends Entity.DAO<Cart> {
+    public interface DAO {
 
-        @Override
-        Optional<Cart> get(long accountId) throws DataAccessException;
+        Cart get(long accountId) throws DataAccessException;
+
+        Cart update(Cart entity) throws DataAccessException;
 
     }
 

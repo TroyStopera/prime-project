@@ -10,9 +10,10 @@ public class ItemReview extends Entity {
     /* Columns */
     private int rating;
     private String review;
-    private long accountId;
+    private long accountId, itemId;
 
-    public ItemReview(int rating, String review, long accountId) {
+    public ItemReview(long itemId, int rating, String review, long accountId) {
+        this.itemId = itemId;
         this.rating = rating;
         this.review = review;
         this.accountId = accountId;
@@ -36,6 +37,10 @@ public class ItemReview extends Entity {
 
     public long getAccountId() {
         return accountId;
+    }
+
+    public long getItemId() {
+        return itemId;
     }
 
     public static ItemReview fromJson(String json) {

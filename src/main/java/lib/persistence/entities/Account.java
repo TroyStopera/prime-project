@@ -3,6 +3,8 @@ package lib.persistence.entities;
 import lib.persistence.DataAccessException;
 import lib.persistence.Entity;
 
+import java.util.Optional;
+
 //TODO hash passwords for security?
 public class Account extends Entity {
 
@@ -54,7 +56,7 @@ public class Account extends Entity {
 
     public interface DAO extends Entity.DAO<Account> {
 
-        Account get(String email) throws DataAccessException;
+        Optional<Account> get(String email) throws DataAccessException;
 
     }
 

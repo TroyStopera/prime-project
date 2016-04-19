@@ -15,7 +15,7 @@ public abstract class DataAccessObject {
 
     protected abstract ItemReview.DAO reviewAccessor();
 
-    protected final void setId(Entity entity, long id) {
+    protected void setId(Entity entity, long id) {
         entity.id = id;
     }
 
