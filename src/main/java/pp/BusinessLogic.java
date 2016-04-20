@@ -54,4 +54,24 @@ public class BusinessLogic
 		//TODO implement
 		return null;
 	}
+
+	/**
+	 * Adds an item to the user's cart
+	 * @param itemId the id of the item
+	 * @param quantity the quantity of item
+	 */
+	public void addItem(long itemId, int quantity)
+	{
+		//TODO implement
+	}
+
+	/**
+	 * Removes an item to the user's cart
+	 * @param itemId the id of the item
+	 * @param quantity the quantity of item
+	 */
+	public void removeItem(long itemId, int quantity)
+	{
+		//TODO implement
+	}
 }
