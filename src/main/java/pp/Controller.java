@@ -1,7 +1,10 @@
 package pp;
 
+import lib.persistence.dao.SQLiteDAO;
 import spark.Request;
 import spark.Response;
+
+import java.sql.SQLException;
 
 public abstract class Controller
 {
@@ -73,13 +76,13 @@ public abstract class Controller
 	}
 
 	//lifecycle functions
-	final void initController(Request req, Response res, SessionManager sm)
+	final void initController(Request req, Response res, SessionManager sm) throws SQLException
 	{
 		this.req = req;
 		this.res = res;
 		this.sm = sm;
 		this.sessionToken = sm.getSessionToken(req, res);
-		this.bl = new BusinessLogic(this);
+		this.bl = new BusinessLogic(this, new SQLiteDAO());
 	}
 
 	public abstract void executeController() throws Exception;

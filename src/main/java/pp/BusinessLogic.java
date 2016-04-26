@@ -1,12 +1,16 @@
 package pp;
 
+import lib.persistence.DataAccessObject;
+
 public class BusinessLogic
 {
 	private final Controller ctrl;
+	private final DataAccessObject dao;
 
-	BusinessLogic(Controller ctrl)
+	public BusinessLogic(Controller ctrl, DataAccessObject dao)
 	{
 		this.ctrl = ctrl;
+		this.dao = dao;
 	}
 
 	/**
