@@ -9,20 +9,21 @@ import java.util.Optional;
 public class Account extends Entity {
 
     /* Columns */
-    private String type, username, email, password;
+    private String username, email, password;
+    private int type;
 
-    public Account(String type, String username, String email, String password) {
+    public Account(int type, String username, String email, String password) {
         this.type = type;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 

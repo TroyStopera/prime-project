@@ -39,7 +39,7 @@ public class SQLiteDAO extends DataAccessObject {
                 "CREATE TABLE IF NOT EXISTS Account(" +
                         "id INTEGER PRIMARY KEY, " +
                         "Pass TEXT, " +
-                        "Type TEXT, " +
+                        "Type INT, " +
                         "Username TEXT, " +
                         "Email TEXT UNIQUE" +
                         ");"
@@ -78,22 +78,22 @@ public class SQLiteDAO extends DataAccessObject {
     }
 
     @Override
-    protected Account.DAO accountAccessor() {
+    public Account.DAO accountAccessor() {
         return new AccountDAO(this);
     }
 
     @Override
-    protected Cart.DAO cartAccessor() {
+    public Cart.DAO cartAccessor() {
         return new CartDAO(this);
     }
 
     @Override
-    protected Item.DAO itemAccessor() {
+    public Item.DAO itemAccessor() {
         return new ItemDAO(this);
     }
 
     @Override
-    protected ItemReview.DAO reviewAccessor() {
+    public ItemReview.DAO reviewAccessor() {
         return new ItemReviewDAO(this);
     }
 

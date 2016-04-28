@@ -24,7 +24,7 @@ class AccountDAO implements Account.DAO {
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 long id = resultSet.getLong("id");
-                String type = resultSet.getString("Type");
+                int type = resultSet.getInt("Type");
                 String username = resultSet.getString("Username");
                 String pass = resultSet.getString("Pass");
                 Account account = new Account(type, username, email, pass);
@@ -44,7 +44,7 @@ class AccountDAO implements Account.DAO {
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, entity.getPassword());
-            statement.setString(2, entity.getType());
+            statement.setInt(2, entity.getType());
             statement.setString(3, entity.getUsername());
             statement.setString(4, entity.getEmail());
             statement.setQueryTimeout(30);
@@ -68,7 +68,7 @@ class AccountDAO implements Account.DAO {
             statement.setQueryTimeout(30);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String type = resultSet.getString("Type");
+                int type = resultSet.getInt("Type");
                 String username = resultSet.getString("Username");
                 String pass = resultSet.getString("Pass");
                 String email = resultSet.getString("Email");
@@ -89,7 +89,7 @@ class AccountDAO implements Account.DAO {
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setString(1, entity.getPassword());
-            statement.setString(2, entity.getType());
+            statement.setInt(2, entity.getType());
             statement.setString(3, entity.getUsername());
             statement.setString(4, entity.getEmail());
             statement.setLong(5, entity.getId());
