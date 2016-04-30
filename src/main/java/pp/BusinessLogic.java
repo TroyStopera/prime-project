@@ -93,7 +93,7 @@ public class BusinessLogic
 	public int getCartCount() throws DataAccessException
 	{	
 		Cart userCart = getCart();
-		return userCart.getSize();
+		return 0;
 	}
 
 	/**
