@@ -1,6 +1,12 @@
 package pp;
 
+import lib.persistence.DataAccessException;
 import lib.persistence.DataAccessObject;
+import lib.persistence.entities.Account;
+import lib.persistence.entities.Cart;
+import lib.persistence.entities.Item;
+
+import java.util.Optional;
 
 public class BusinessLogic
 {
@@ -21,10 +27,70 @@ public class BusinessLogic
 		return ctrl.sessionToken();
 	}
 
+	/** @return true if the user is logged in */
+	private boolean isUserLoggedIn()
+	{
+		return ctrl.isUserLoggedIn();
+	}
+
+	/** @return returns the email of the user that is logged in, or null if no one is logged in */
+	private String getUserEmail()
+	{
+		return ctrl.isUserLoggedIn() ? ctrl.email() : null;
+	}
+
+	/** @return returns the Account of the user that is logged in, or null if no one is logged in */
+	private Account getAccount() throws DataAccessException
+	{
+		if( ctrl.isUserLoggedIn() )
+		{
+			assert dao.accountAccessor().get( getUserEmail() ).isPresent() : "user should not be able to log in with an account that doesn't exist";
+			return dao.accountAccessor().get( getUserEmail() ).get();
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	/** @return returns the Cart of the user that is logged in, or null if no one is logged in */
+	private Cart getCart() throws DataAccessException
+	{
+		if( ctrl.isUserLoggedIn() )
+		{
+			final Account acct = getAccount();
+			assert acct == null : "user should not be able to log in with an account that doesn't exist";
+			return dao.cartAccessor().get( acct.getId() );
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	/** @return the Item with the given ID, or null if such an item doesn't exist */
+	private Item getItem(long itemId) throws DataAccessException
+	{
+		final Optional<Item> itemOptional = dao.itemAccessor().get( itemId );
+		return itemOptional.isPresent() ? itemOptional.get() : null;
+	}
+
+	/** Writes the given Account to the database. */
+	private void writeAccount(Account acct) throws DataAccessException
+	{
+		dao.accountAccessor().update( acct );
+	}
+
+	/** Writes the given Cart to the database. */
+	private void writeCart(Cart cart) throws DataAccessException
+	{
+		dao.cartAccessor().update( cart );
+	}
+
 	/**
 	 * @return the number of items in this user's cart
 	 */
-	public int getCartCount()
+	public int getCartCount() throws DataAccessException
 	{
 		//TODO implement
 		return 0;
@@ -33,7 +99,7 @@ public class BusinessLogic
 	/**
 	 * @return the total value of this user's cart
 	 */
-	public String getCartTotal()
+	public String getCartTotal() throws DataAccessException
 	{
 		//TODO implement
 		return "$0.00";
@@ -43,7 +109,7 @@ public class BusinessLogic
 	 * @param itemId the ID of the item
 	 * @return the mime-type of the given item's image, or null if the item has no image
 	 */
-	public String getItemImageMime(long itemId)
+	public String getItemImageMime(long itemId) throws DataAccessException
 	{
 		//TODO implement
 		return null;
@@ -53,7 +119,7 @@ public class BusinessLogic
 	 * @param itemId the ID of the item
 	 * @return the item's image, or null if the item has no image
 	 */
-	public byte[] getItemImageData(long itemId)
+	public byte[] getItemImageData(long itemId) throws DataAccessException
 	{
 		//TODO implement
 		return null;
@@ -64,9 +130,9 @@ public class BusinessLogic
 	 * @param itemId the id of the item
 	 * @param quantity the quantity of item
 	 */
-	public void addItem(long itemId, int quantity)
+	public void addItem(long itemId, int quantity) throws DataAccessException
 	{
-		Cart userCart;
+		Cart userCart = getCart(); //will be null if the user isn't logged in
 		//TODO implement
 		//Get user's ID to get user's cart
 		//userCart.updateCart(itemId, quantity);
@@ -77,7 +143,7 @@ public class BusinessLogic
 	 * @param itemId the id of the item
 	 * @param quantity the quantity of item
 	 */
-	public void removeItem(long itemId, int quantity)
+	public void removeItem(long itemId, int quantity) throws DataAccessException
 	{
 		//TODO implement
 	}

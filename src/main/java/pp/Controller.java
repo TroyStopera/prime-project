@@ -43,6 +43,7 @@ public abstract class Controller
 	 */
 	protected final boolean login(String username, String password, String salt) throws Exception
 	{
+		//TODO @Warren if login is successful, create a Cart for this user in the DB
 		if( sm.login(req, res, username, password, salt) )
 		{
 			sessionToken = sm.getSessionToken(req, res);
@@ -62,16 +63,22 @@ public abstract class Controller
 	}
 
 	/** @return true if the user is logged in */
-	protected boolean isUserLoggedIn()
+	public boolean isUserLoggedIn()
 	{
-		//TODO implement
+		//TODO @Warren implement
 		return false;
 	}
 
 	/** @return the logged in user's username (or "" is the user isn't logged in) */
-	protected String username()
+	public String username()
 	{
-		//TODO implement
+		//TODO @Warren implement
+		return "";
+	}
+
+	public String email()
+	{
+		//TODO @Warren implement
 		return "";
 	}
 
