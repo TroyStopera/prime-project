@@ -19,7 +19,7 @@ public class SQLiteDAO extends DataAccessObject {
     private static final String DRIVER_NAME = "org.sqlite.JDBC";
     public static final String DATABASE_NAME = "Prime.db";
 
-    protected final Connection connection;
+    protected static Connection connection;
 
     private static final Lock lock = new ReentrantLock();
 
@@ -31,7 +31,7 @@ public class SQLiteDAO extends DataAccessObject {
             throw new SQLException("Could not find SQL driver");
         }
 
-        connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+        if (connection == null) connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
 
         lock();
 
