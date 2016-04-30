@@ -71,9 +71,12 @@ public class SessionManager
 	 * @return true if login was successful, false if it failed
 	 * @throws Exception if login failed due to server errors
 	 */
-	public boolean login(Request req, Response res, String username, String password, String salt) throws Exception
+	public boolean login(Request req, Response res, String email, String password) throws Exception
 	{
-		//TODO implement! -- @Troy: what does the Accounts table look like on the database?
+		//get the user's session token
+		final String sessionToken = getSessionToken(req, res);
+
+		//get the user's account
 		return false;
 	}
 

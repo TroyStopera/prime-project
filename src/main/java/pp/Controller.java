@@ -41,10 +41,10 @@ public abstract class Controller
 	 * @return true if the user is logged in, false if the user supplied the wrong credentials
 	 * @throws Exception if login failed due to server errors
 	 */
-	protected final boolean login(String username, String password, String salt) throws Exception
+	protected final boolean login(String email, String password) throws Exception
 	{
 		//TODO @Warren if login is successful, create a Cart for this user in the DB
-		if( sm.login(req, res, username, password, salt) )
+		if( sm.login(req, res, email, password) )
 		{
 			sessionToken = sm.getSessionToken(req, res);
 			return true;
