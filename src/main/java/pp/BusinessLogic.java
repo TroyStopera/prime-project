@@ -92,8 +92,12 @@ public class BusinessLogic
 	 */
 	public int getCartCount() throws DataAccessException
 	{	
-		Cart userCart = getCart();
-		return 0;
+		if(getCart() == null){
+			return 0;
+		}
+		else{
+			return getCart().getItems().size();
+		}
 	}
 
 	/**
@@ -101,7 +105,19 @@ public class BusinessLogic
 	 */
 	public String getCartTotal() throws DataAccessException
 	{
+		double price = 0.0;
+		Cart userCart;
 		//TODO implement
+		//get cart
+		if(getCart() == null){
+			return "0.00";
+		}
+		else{
+			userCart = getCart();
+		}
+		//itorate through items in cart
+		//Iterator runThrough = userCart.getItems().entrySet().Iterator();
+		//mutiple price and quantity for each item add it to total price
 		return "$0.00";
 	}
 
