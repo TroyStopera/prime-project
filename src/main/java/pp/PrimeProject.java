@@ -1,7 +1,9 @@
 package pp;
 
+import lib.persistence.DataAccessException;
 import lib.persistence.DataAccessObject;
 import lib.persistence.dao.SQLiteDAO;
+import lib.persistence.entities.Item;
 import pp.controllers.*;
 import spark.Request;
 import spark.Response;
@@ -34,6 +36,18 @@ public class PrimeProject
 		catch( SQLException e )
 		{
 			throw new RuntimeException("Could not establish connection to DB");
+		}
+
+		if( DEBUG )
+		{
+			try
+			{
+				createRandomItems(dao);
+			}
+			catch( DataAccessException e )
+			{
+				throw new RuntimeException("Could not create random items", e);
+			}
 		}
 
 		before("/debug/*", (req, res) -> {
@@ -108,6 +122,28 @@ public class PrimeProject
 		ctrl.executeController();
 		ctrl.deinitController();
 		return res.body();
+	}
+
+	private static void createRandomItems(DataAccessObject dao) throws DataAccessException
+	{
+		final String[] names = {
+				"Earring",
+				"Spoon",
+				"Cup of Noodles",
+				"Red Solo Cup",
+				"Lamp",
+				"Computer Monitor",
+				"Watter Bottle",
+				"Empty Snapple Bottle",
+				"Coffee Maker",
+				"Lint Roller"
+		};
+
+		for( String name : names )
+		{
+			final Item i = new Item(name, "This is a " + name, (int) (Math.random() * 100), (int) (Math.random() * 99));
+			dao.itemAccessor().create(i);
+		}
 	}
 
 	public static Connection createDBConnection() throws IOException, SQLException
