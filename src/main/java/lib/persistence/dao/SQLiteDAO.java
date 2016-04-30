@@ -14,12 +14,23 @@ import java.sql.SQLException;
 
 public class SQLiteDAO extends DataAccessObject {
 
+	private static final String DRIVER_NAME = "org.sqlite.JDBC";
     public static final String DATABASE_NAME = "Prime.db";
 
     protected final Connection connection;
 
     public SQLiteDAO() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+	    //load the driver class so that it can register itself for DriverManager to find
+	    try
+	    {
+		    Class.forName(DRIVER_NAME);
+	    }
+	    catch( ClassNotFoundException e )
+	    {
+		    throw new SQLException("Could not find SQL driver");
+	    }
+
+	    connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
 
         //ensure Item table exists
         PreparedStatement createItem = connection.prepareStatement(
