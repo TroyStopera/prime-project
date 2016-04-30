@@ -17,6 +17,7 @@ class AccountDAO implements Account.DAO {
     @Override
     public Optional<Account> get(String email) throws DataAccessException {
         String query = "SELECT * FROM Account WHERE Email = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setString(1, email);
@@ -35,12 +36,15 @@ class AccountDAO implements Account.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 
     @Override
     public Account create(Account entity) throws DataAccessException {
         String query = "INSERT INTO Account (Pass, Type, Username, Email) VALUES(?, ?, ?, ?)";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, entity.getPassword());
@@ -55,6 +59,8 @@ class AccountDAO implements Account.DAO {
             else throw new DataAccessException("No ID returned for new Account");
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -62,6 +68,7 @@ class AccountDAO implements Account.DAO {
     @Override
     public Optional<Account> get(long id) throws DataAccessException {
         String query = "SELECT * FROM Account WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -80,12 +87,15 @@ class AccountDAO implements Account.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 
     @Override
     public Account update(Account entity) throws DataAccessException {
         String query = "UPDATE Account SET Pass = ?, Type = ?, Username = ?, Email = ? WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setString(1, entity.getPassword());
@@ -97,6 +107,8 @@ class AccountDAO implements Account.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -104,6 +116,7 @@ class AccountDAO implements Account.DAO {
     @Override
     public void delete(Account entity) throws DataAccessException {
         String query = "DELETE FROM Account WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, entity.getId());
@@ -111,6 +124,8 @@ class AccountDAO implements Account.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 }

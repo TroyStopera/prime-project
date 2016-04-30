@@ -23,6 +23,7 @@ class ItemDAO implements Item.DAO {
     public List<Item> allItems() throws DataAccessException {
         String query = "SELECT * FROM Item WHERE 1 = 1";
         List<Item> items = new LinkedList<>();
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setQueryTimeout(30);
@@ -32,6 +33,8 @@ class ItemDAO implements Item.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return items;
     }
@@ -39,6 +42,7 @@ class ItemDAO implements Item.DAO {
     @Override
     public Item create(Item entity) throws DataAccessException {
         String query = "INSERT INTO Item (Name, Description, PriceDollars, PriceCents) VALUES(?, ?, ?, ?)";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, entity.getName());
@@ -53,6 +57,8 @@ class ItemDAO implements Item.DAO {
             else throw new DataAccessException("No ID returned for new Item");
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -60,6 +66,7 @@ class ItemDAO implements Item.DAO {
     @Override
     public Optional<Item> get(long id) throws DataAccessException {
         String query = "SELECT * FROM Item WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -72,6 +79,8 @@ class ItemDAO implements Item.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return Optional.empty();
     }
@@ -79,6 +88,7 @@ class ItemDAO implements Item.DAO {
     @Override
     public Item update(Item entity) throws DataAccessException {
         String query = "UPDATE Item SET Name = ?, Description = ?, PriceDollars = ?, PriceCents = ? WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setString(1, entity.getName());
@@ -90,6 +100,8 @@ class ItemDAO implements Item.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -97,6 +109,7 @@ class ItemDAO implements Item.DAO {
     @Override
     public void delete(Item entity) throws DataAccessException {
         String query = "DELETE FROM Item WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, entity.getId());
@@ -104,6 +117,8 @@ class ItemDAO implements Item.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 

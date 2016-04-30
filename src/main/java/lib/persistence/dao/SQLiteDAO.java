@@ -11,26 +11,29 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class SQLiteDAO extends DataAccessObject {
 
-	private static final String DRIVER_NAME = "org.sqlite.JDBC";
+    private static final String DRIVER_NAME = "org.sqlite.JDBC";
     public static final String DATABASE_NAME = "Prime.db";
 
     protected final Connection connection;
 
-    public SQLiteDAO() throws SQLException {
-	    //load the driver class so that it can register itself for DriverManager to find
-	    try
-	    {
-		    Class.forName(DRIVER_NAME);
-	    }
-	    catch( ClassNotFoundException e )
-	    {
-		    throw new SQLException("Could not find SQL driver");
-	    }
+    private static final Lock lock = new ReentrantLock();
 
-	    connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+    public SQLiteDAO() throws SQLException {
+        //load the driver class so that it can register itself for DriverManager to find
+        try {
+            Class.forName(DRIVER_NAME);
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Could not find SQL driver");
+        }
+
+        connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+
+        lock();
 
         //ensure Item table exists
         PreparedStatement createItem = connection.prepareStatement(
@@ -86,6 +89,8 @@ public class SQLiteDAO extends DataAccessObject {
         );
         createItemReview.setQueryTimeout(30);
         createItemReview.execute();
+
+        unlock();
     }
 
     @Override
@@ -111,5 +116,13 @@ public class SQLiteDAO extends DataAccessObject {
     @Override
     protected void setId(Entity entity, long id) {
         super.setId(entity, id);
+    }
+
+    void lock() {
+        lock.lock();
+    }
+
+    void unlock() {
+        lock.unlock();
     }
 }
