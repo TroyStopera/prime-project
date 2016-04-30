@@ -56,12 +56,9 @@ public abstract class Controller
 		final String hashedPassword = Base64.getEncoder().encodeToString( hash(password.toCharArray(), salt) );
 
 		//compare the passwords
-		if( hashedActualPassword.equals(hashedPassword) ) //the user supplied the correct password!
+		if( slowEquals(hashedActualPassword, hashedPassword) ) //the user supplied the correct password!
 		{
-			//log the user in with this account ID
-			sm.setSessionAccountId(req, res, acct.getId());
-
-			//TODO @Warren if login is successful, create a Cart for this user in the DB
+			sm.setSessionAccountId(req, res, acct.getId()); //log the user in with this account ID
 			return true;
 		}
 		else //the user provided the wrong password
@@ -158,5 +155,14 @@ public abstract class Controller
 		byte[] salt = new byte[ saltLen ];
 		random.nextBytes(salt);
 		return salt;
+	}
+
+	/** used to compare password hashes in a way that avoids timing attacks */
+	private boolean slowEquals(String str1, String str2)
+	{
+		int diff = str1.length() ^ str2.length();
+		for( int x = 0; x < str1.length() && x < str2.length(); x++ )
+			diff = str1.charAt(x) ^ str2.charAt(x);
+		return diff == 0;
 	}
 }
