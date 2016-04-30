@@ -120,7 +120,8 @@ public abstract class HTMLController extends Controller
 	public final void executeController() throws Exception
 	{
 		bindData("isUserLoggedIn", isUserLoggedIn());
-		bindData("username", username());
+		bindData("username", bl().getUsername());
+
 		bindData("url", req().pathInfo());
 
 		bindData("cartCount", bl().getCartCount());

@@ -41,6 +41,8 @@ public class PrimeProject
 
 		get("/createAccount", (req, res) -> useController( new CreateAcctController(), req, res ) );
 
+		post( "/performAcctCreate", (req, res) -> useController( new PerformCreateAcctController(), req, res) );
+
 		post("/performLogin", (req, res) -> useController( new PerformLoginController(), req, res ) );
 
 		get("/performLogout", (req, res) -> useController( new PerformLogoutController(), req, res ) );

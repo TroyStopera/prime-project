@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class SQLiteDAO extends DataAccessObject {
 
 	private static final String DRIVER_NAME = "org.sqlite.JDBC";
-    public static final String DATABASE_NAME = "Prime.db";
+    public static final String DATABASE_NAME = ":memory:";//"Prime.db";
 
     protected final Connection connection;
 
