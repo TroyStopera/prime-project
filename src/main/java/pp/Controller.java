@@ -1,7 +1,6 @@
 package pp;
 
 import lib.persistence.DataAccessObject;
-import lib.persistence.dao.SQLiteDAO;
 import lib.persistence.entities.Account;
 import spark.Request;
 import spark.Response;
@@ -124,12 +123,12 @@ public abstract class Controller
 	}
 
 	//lifecycle functions
-	final void initController(Request req, Response res, SessionManager sm) throws SQLException
+	final void initController(Request req, Response res, DataAccessObject dao, SessionManager sm) throws SQLException
 	{
 		this.req = req;
 		this.res = res;
 		this.sm = sm;
-		this.dao = new SQLiteDAO();
+		this.dao = dao;
 		this.bl = new BusinessLogic(this, dao);
 	}
 
