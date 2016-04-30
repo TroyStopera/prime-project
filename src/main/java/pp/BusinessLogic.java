@@ -132,10 +132,13 @@ public class BusinessLogic
 	 */
 	public void addItem(long itemId, int quantity) throws DataAccessException
 	{
-		Cart userCart = getCart(); //will be null if the user isn't logged in
-		//TODO implement
-		//Get user's ID to get user's cart
-		//userCart.updateCart(itemId, quantity);
+		//make sure quantity is posotive and itemId exists
+		if(quantity > 0 && getItem(itemId) != null){
+			Cart userCart = getCart(); //will be null if the user isn't logged in
+			userCart.updateCart(itemId, quantity);//add item and quantity to cart
+			writeCart(userCart);//write the cart the database	
+		}	
+		//ADD ERROR SAYING NEEDS TO BE POSOTIVE AND A REAL ITEM
 	}
 
 	/**
@@ -145,6 +148,12 @@ public class BusinessLogic
 	 */
 	public void removeItem(long itemId, int quantity) throws DataAccessException
 	{
-		//TODO implement
+		//make sure quantity is posotive and itemId exists
+		if(quantity < 0 && getItem(itemId) != null){
+			Cart userCart = getCart(); //will be null if the user isn't logged in
+			userCart.updateCart(itemId, quantity);//add item and quantity to cart
+			writeCart(userCart);//write the cart the database	
+		}	
+		//ADD ERROR SAYING NEEDS TO BE NEGATIVE AND A REAL ITEM
 	}
 }
