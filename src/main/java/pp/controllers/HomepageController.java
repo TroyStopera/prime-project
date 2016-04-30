@@ -1,5 +1,6 @@
 package pp.controllers;
 
+import lib.persistence.DataAccessException;
 import pp.HTMLController;
 
 public class HomepageController extends HTMLController
@@ -14,8 +15,24 @@ public class HomepageController extends HTMLController
 		addCSS("/static/item.css");
 		addCSS("/static/homepage.css");
 
+		bindData("featuredItem", new Item(bl().getFeaturedItemId() ));
+
 		outputView("/www/views/header.hbs");
 		outputView("/www/views/homepage.hbs");
 		outputView("/www/views/footer.hbs");
+	}
+
+	private class Item
+	{
+		public final long id;
+		public final String name, desc, cost;
+
+		private Item(long id) throws DataAccessException
+		{
+			this.id = id;
+			this.name = bl().getItemName( id );
+			this.desc = bl().getItemDescription( id );
+			this.cost = bl().getItemCost( id );
+		}
 	}
 }

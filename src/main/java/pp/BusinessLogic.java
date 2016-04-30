@@ -149,4 +149,32 @@ public class BusinessLogic
 		//TODO implement
 		return "";
 	}
+
+	/** @return the featured item for the current user */
+	public long getFeaturedItemId()
+	{
+		//TODO implement
+		return 0;
+	}
+
+	/** @return the name of the item with the given ID */
+	public String getItemName(long itemId) throws DataAccessException
+	{
+		//TODO implement
+		return "";
+	}
+
+	/** @return the description of the item with the given ID */
+	public String getItemDescription(long itemId) throws DataAccessException
+	{
+		//TODO implement
+		return "";
+	}
+
+	/** @return the cost of the item with the given ID */
+	public String getItemCost(long itemId) throws DataAccessException
+	{
+		//TODO implement
+		return "$0.00";
+	}
 }
