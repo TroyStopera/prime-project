@@ -7,13 +7,13 @@ import lib.persistence.entities.ItemReview;
 
 public abstract class DataAccessObject {
 
-    protected abstract Account.DAO accountAccessor();
+    public abstract Account.DAO accountAccessor();
 
-    protected abstract Cart.DAO cartAccessor();
+    public abstract Cart.DAO cartAccessor();
 
-    protected abstract Item.DAO itemAccessor();
+    public abstract Item.DAO itemAccessor();
 
-    protected abstract ItemReview.DAO reviewAccessor();
+    public abstract ItemReview.DAO reviewAccessor();
 
     protected void setId(Entity entity, long id) {
         entity.id = id;
