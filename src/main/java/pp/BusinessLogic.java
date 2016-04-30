@@ -69,6 +69,7 @@ public class BusinessLogic
 		Cart userCart;
 		//TODO implement
 		//Get user's ID to get user's cart
+		// userCart = dao.cart
 		//userCart.updateCart(itemId, quantity);
 	}
 
