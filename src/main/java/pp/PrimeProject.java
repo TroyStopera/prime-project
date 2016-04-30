@@ -21,7 +21,6 @@ public class PrimeProject
 {
 	private static final boolean DEBUG = true; //set this to FALSE in non-development builds
 	private static SessionManager sm;
-	private static DataAccessObject dao;
 
 	public static void main(String[] args)
 	{
@@ -29,22 +28,14 @@ public class PrimeProject
 
 		sm = new SessionManager();
 
-		try
-		{
-			dao = new SQLiteDAO();
-		}
-		catch( SQLException e )
-		{
-			throw new RuntimeException("Could not establish connection to DB");
-		}
-
 		if( DEBUG )
 		{
 			try
 			{
+				DataAccessObject dao = new SQLiteDAO();
 				createRandomItems(dao);
 			}
-			catch( DataAccessException e )
+			catch( DataAccessException | SQLException e )
 			{
 				throw new RuntimeException("Could not create random items", e);
 			}
@@ -118,7 +109,7 @@ public class PrimeProject
 
 	private static String useController(final Controller ctrl, final Request req, final Response res) throws Exception
 	{
-		ctrl.initController(req, res, dao, sm);
+		ctrl.initController(req, res, new SQLiteDAO(), sm);
 		ctrl.executeController();
 		ctrl.deinitController();
 		return res.body();
