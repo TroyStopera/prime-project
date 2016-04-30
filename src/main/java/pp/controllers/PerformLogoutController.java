@@ -14,6 +14,6 @@ public class PerformLogoutController extends Controller
 		if( redirectPath == null )
 			redirectPath = "/";
 
-		res().redirect(redirectPath, 301);
+		res().redirect(redirectPath, 302);
 	}
 }

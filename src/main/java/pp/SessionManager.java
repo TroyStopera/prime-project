@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
+//TODO @Warren check for race conditions
 public class SessionManager
 {
 	private static final String cookieName = "prime"; //the name of the browser cookie we use to track sessions

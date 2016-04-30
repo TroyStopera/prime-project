@@ -18,7 +18,7 @@ public class PerformCreateAcctController extends Controller
 
 		if( email != null && username != null && password != null && createAccount(email, username, password) ) //account creation was successful
 		{
-			res().redirect(redirectPath, 301);
+			res().redirect(redirectPath, 302);
 		}
 		else
 		{

@@ -17,7 +17,7 @@ public class PerformLoginController extends Controller
 
 		if( email != null && password != null && login(email, password) ) //login was successful
 		{
-			res().redirect(redirectPath, 301);
+			res().redirect(redirectPath, 302);
 		}
 		else
 		{
