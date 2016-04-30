@@ -91,9 +91,9 @@ public class BusinessLogic
 	 * @return the number of items in this user's cart
 	 */
 	public int getCartCount() throws DataAccessException
-	{
-		//TODO implement
-		return 0;
+	{	
+		Cart userCart = getCart();
+		return userCart.getSize();
 	}
 
 	/**
@@ -139,6 +139,7 @@ public class BusinessLogic
 			writeCart(userCart);//write the cart the database	
 		}	
 		//ADD ERROR SAYING NEEDS TO BE POSOTIVE AND A REAL ITEM
+		//ALSO NO ZERO
 	}
 
 	/**
@@ -155,5 +156,6 @@ public class BusinessLogic
 			writeCart(userCart);//write the cart the database	
 		}	
 		//ADD ERROR SAYING NEEDS TO BE NEGATIVE AND A REAL ITEM
+		//ALSO NO ZERO
 	}
 }
