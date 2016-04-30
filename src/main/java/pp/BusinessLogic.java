@@ -19,24 +19,10 @@ public class BusinessLogic
 		this.dao = dao;
 	}
 
-	/**
-	 * @return the identifier for this user's session
-	 */
-	private String sessionToken()
-	{
-		return ctrl.sessionToken();
-	}
-
 	/** @return true if the user is logged in */
 	private boolean isUserLoggedIn()
 	{
 		return ctrl.isUserLoggedIn();
-	}
-
-	/** @return returns the email of the user that is logged in, or null if no one is logged in */
-	private String getUserEmail()
-	{
-		return ctrl.isUserLoggedIn() ? ctrl.email() : null;
 	}
 
 	/** @return returns the Account of the user that is logged in, or null if no one is logged in */
@@ -44,8 +30,8 @@ public class BusinessLogic
 	{
 		if( ctrl.isUserLoggedIn() )
 		{
-			assert dao.accountAccessor().get( getUserEmail() ).isPresent() : "user should not be able to log in with an account that doesn't exist";
-			return dao.accountAccessor().get( getUserEmail() ).get();
+			assert dao.accountAccessor().get( ctrl.getUserAccountId() ).isPresent() : "user should not be able to log in with an account that doesn't exist";
+			return dao.accountAccessor().get( ctrl.getUserAccountId() ).get();
 		}
 		else
 		{
@@ -155,5 +141,12 @@ public class BusinessLogic
 			writeCart(userCart);//write the cart the database	
 		}	
 		//ADD ERROR SAYING NEEDS TO BE NEGATIVE AND A REAL ITEM
+	}
+
+	/** @return the username of the user that is logged in, or "" if the user isn't logged in */
+	public String getUsername()
+	{
+		//TODO implement
+		return "";
 	}
 }

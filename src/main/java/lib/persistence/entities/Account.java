@@ -8,6 +8,9 @@ import java.util.Optional;
 //TODO hash passwords for security?
 public class Account extends Entity {
 
+	public static final int TYPE_USER = 0;
+	public static final int TYPE_ADMIN = 1;
+
     /* Columns */
     private String username, email, password;
     private int type;
