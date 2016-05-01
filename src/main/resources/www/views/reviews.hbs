@@ -1,3 +1,21 @@
+{{#if isUserLoggedIn}}
+	<h1>Write a review for {{item.name}}</h1>
+	<form action="/item/{{item.id}}/performCreateReview" method="POST">
+		<input type="text" name="rating" placeholder="Star Rating" /><br />
+		<textarea name="review"></textarea><br />
+		<input type="submit" value="Submit Review" />
+	</form>
+	<hr />
+{{^}}
+	<h1><a href="/login?returnTo={{url}}">Login</a> to write a review of this item</h1>
+	<h1>Write a review for {{item.name}}</h1>
+	<form>
+		<input type="text" name="rating" placeholder="Star Rating" disabled="disabled" /><br />
+		<textarea name="review" disabled="disabled"></textarea><br />
+		<input type="button" value="Submit Review" disabled="disabled" />
+	</form>
+	<hr />
+{{/if}}
 {{#each review}}
 <span class="review">
 	<h1>{{rating}}</h1>

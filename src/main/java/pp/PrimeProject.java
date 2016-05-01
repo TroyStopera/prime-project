@@ -52,13 +52,15 @@ public class PrimeProject
 
 		get("/item/:id", (req, res) -> useController( new ItemController(), req, res ) );
 
+		post("/item/:id/performCreateReview", (req, res) -> useController(new PerformCreateReviewController(), req, res) );
+
 		get("/itemImage/:id", (req, res) -> useController( new ItemImageController(), req, res ) );
 
 		get("/login", (req, res) -> useController( new LoginController(), req, res ) );
 
 		get("/createAccount", (req, res) -> useController( new CreateAcctController(), req, res ) );
 
-		post( "/performAcctCreate", (req, res) -> useController( new PerformCreateAcctController(), req, res) );
+		post("/performAcctCreate", (req, res) -> useController( new PerformCreateAcctController(), req, res) );
 
 		post("/performLogin", (req, res) -> useController( new PerformLoginController(), req, res ) );
 

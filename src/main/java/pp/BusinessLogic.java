@@ -173,4 +173,15 @@ public class BusinessLogic
 		//TODO implement
 		return new ArrayList<>();
 	}
+
+	/**
+	 * Posts a review as the currently logged in user
+	 * @param itemId the id of the item this review is for
+	 * @param rating the rating of this item
+	 * @param review the review text
+	 */
+	public void createReview(long itemId, int rating, String review) throws DataAccessException
+	{
+		//TODO implement
+	}
 }

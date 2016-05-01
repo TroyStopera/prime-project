@@ -51,6 +51,7 @@ public class ItemController extends HTMLController
 			println("<div class='container container-1'>");
 			println("<span class='panel panel-1'>");
 			outputView("/www/views/reviews.hbs")
+					.bindData("item", new ControllerItem(item))
 					.bindData("review", reviewList);
 			println("</span>");
 			println("</div>");

@@ -21,7 +21,7 @@ public class PerformLoginController extends Controller
 		}
 		else
 		{
-			res().redirect("/login?returnTo=" +redirectPath+ "&reason=failed", 301);
+			res().redirect("/login?returnTo=" +redirectPath+ "&reason=failed", 302);
 		}
 	}
 }

@@ -118,6 +118,7 @@ public class SessionManager
 	private void issueSessionCookie(Response res, String sessionCookie)
 	{
 		Cookie cookie = new Cookie(cookieName, sessionCookie);
+		cookie.setPath("/");
 		cookie.setMaxAge( (int) sessionLengthInSeconds ); //this cookie will expire in 15 minutes
 		cookie.setHttpOnly(true); //this cookie can't be modified by JavaScript in the user's browser
 		//cookie.setSecure(true); //this cookie will only be served over HTTPS //TODO are we using SSL?
