@@ -5,7 +5,10 @@ import lib.persistence.DataAccessObject;
 import lib.persistence.entities.Account;
 import lib.persistence.entities.Cart;
 import lib.persistence.entities.Item;
+import lib.persistence.entities.ItemReview;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class BusinessLogic
@@ -150,10 +153,24 @@ public class BusinessLogic
 		return "";
 	}
 
+	/** @return the username of the user with the given accountId, or "" if there is no such user */
+	public String getUsername(long accountId)
+	{
+		//TODO implement
+		return "";
+	}
+
 	/** @return the featured item for the current user */
 	public Item getFeaturedItem() throws DataAccessException
 	{
 		//TODO implement
 		return getItem(1);
+	}
+
+	/** @return a list of reviews for the given item */
+	public List<ItemReview> getReviewsFor(Item item)
+	{
+		//TODO implement
+		return new ArrayList<>();
 	}
 }
