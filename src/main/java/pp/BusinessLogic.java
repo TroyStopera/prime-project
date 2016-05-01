@@ -55,7 +55,7 @@ public class BusinessLogic
 	}
 
 	/** @return the Item with the given ID, or null if such an item doesn't exist */
-	private Item getItem(long itemId) throws DataAccessException
+	public Item getItem(long itemId) throws DataAccessException
 	{
 		final Optional<Item> itemOptional = dao.itemAccessor().get( itemId );
 		return itemOptional.isPresent() ? itemOptional.get() : null;
@@ -151,30 +151,9 @@ public class BusinessLogic
 	}
 
 	/** @return the featured item for the current user */
-	public long getFeaturedItemId()
+	public Item getFeaturedItem() throws DataAccessException
 	{
 		//TODO implement
-		return 0;
-	}
-
-	/** @return the name of the item with the given ID */
-	public String getItemName(long itemId) throws DataAccessException
-	{
-		//TODO implement
-		return "";
-	}
-
-	/** @return the description of the item with the given ID */
-	public String getItemDescription(long itemId) throws DataAccessException
-	{
-		//TODO implement
-		return "";
-	}
-
-	/** @return the cost of the item with the given ID */
-	public String getItemCost(long itemId) throws DataAccessException
-	{
-		//TODO implement
-		return "$0.00";
+		return getItem(1);
 	}
 }

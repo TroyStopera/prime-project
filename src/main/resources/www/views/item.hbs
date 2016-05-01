@@ -1,19 +1,16 @@
 <span class="item">
-	<h1 class="item-name">Widget</h1>
+	{{#if item}}
+	<h1 class="item-name">{{item.name}}</h1>
 	<div class="price">
-		<span class="sale-price">$2,999,999</span>
-		<span class="old-price">$3,000,000</span>
-		<span class="sale-desc">(&lt;1% off!)</span>
+		<span class="sale-price">{{item.cost}}</span>
 	</div>
 	<span>
 		<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/0" width="50" height="50" />
 		<span class="item-desc">
-			Features:
-			<ul>
-				<li>Obscenely overpriced</li>
-				<li>Does nothing</li>
-				<li>Why would you buy this?</li>
-			</ul>
+			{{item.desc}}
 		</span>
 	</span>
+	{{^}}
+		<h1>No such item exists</h1>
+	{{/if}}
 </span>
