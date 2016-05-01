@@ -7,6 +7,7 @@
 
 		this.update = function() {
 			$.ajax({
+				"method": "POST",
 				"url": "/api/listCartItems",
 				"dataType": "json"
 			}).done( function(json) {
@@ -21,6 +22,7 @@
 			};
 
 			$.ajax({
+				"method": "POST",
 				"url": "/api/addCartItem",
 				"data": JSON.stringify(param),
 				"dataType": "json"
@@ -36,6 +38,7 @@
 			};
 
 			$.ajax({
+				"method": "POST",
 				"url": "/api/removeCartItem",
 				"data": JSON.stringify(param),
 				"dataType": "json"

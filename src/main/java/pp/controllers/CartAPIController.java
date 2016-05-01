@@ -22,10 +22,10 @@ public class CartAPIController
 	{
 		public void executeController() throws Exception
 		{
-			if( req().queryParams("id") == null || req().queryParams("quantity") == null )
+			if( req().queryParams("itemId") == null || req().queryParams("quantity") == null )
 				Spark.halt(400);
 
-			long itemId = Long.parseLong( req().queryParams("id") );
+			long itemId = Long.parseLong( req().queryParams("itemId") );
 			int quantity = Integer.parseInt( req().queryParams("quantity") );
 
 			bl().addItem(itemId, quantity);
@@ -43,10 +43,10 @@ public class CartAPIController
 	{
 		public void executeController() throws Exception
 		{
-			if( req().queryParams("id") == null || req().queryParams("quantity") == null )
+			if( req().queryParams("itemId") == null || req().queryParams("quantity") == null )
 				Spark.halt(400);
 
-			long itemId = Long.parseLong( req().queryParams("id") );
+			long itemId = Long.parseLong( req().queryParams("itemId") );
 			int quantity = Integer.parseInt( req().queryParams("quantity") );
 
 			bl().removeItem(itemId, quantity);
