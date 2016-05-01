@@ -76,6 +76,13 @@ public class BusinessLogic
 		dao.cartAccessor().update( cart );
 	}
 
+	/** @return a list of items in the currently logged in user's cart, or an empty list */
+	public List<Cart.CartItem> getCartItems()
+	{
+		//TODO implement
+		return new ArrayList<>();
+	}
+
 	/**
 	 * @return the number of items in this user's cart
 	 */
@@ -144,6 +151,16 @@ public class BusinessLogic
 			writeCart(userCart);//write the cart the database	
 		}	
 		//ADD ERROR SAYING NEEDS TO BE NEGATIVE AND A REAL ITEM
+	}
+
+	/**
+	 * Sets the quantity of the item in the user's cart
+	 * @param itemId the id of the item
+	 * @param quantity the new quantity of the item
+	 */
+	public void updateItemQuantity(long itemId, int quantity) throws DataAccessException
+	{
+		//TODO implement
 	}
 
 	/** @return the username of the user that is logged in, or "" if the user isn't logged in */

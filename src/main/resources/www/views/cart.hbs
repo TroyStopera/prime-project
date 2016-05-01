@@ -1,17 +1,50 @@
 <div class="main-content-wrapper">
 	<div class="container container-1">
 		<span class="panel panel-1">
-			<h1>Total: $0.00</h1>
-			<form>
-				<input type="button" value="Proceed to checkout" />
-			</form>
+			<h1>Total: {{cartTotal}}</h1>
 		</span>
 	</div>
 
+	{{#each cartEntry}}
 	<div class="container container-1">
 		<span class="panel panel-1">
-			<h1>Item 1</h1>
-			<p>Item Desc</p>
+			<h1 class="item-name">{{item.name}}</h1>
+			<div class="price">
+				<span class="sale-price">{{item.cost}}</span>
+			</div>
+			<select class="quantity-picker" data-item-id="{{item.id}}" data-starting-quantity="{{quantity}}">
+				<option value="0">Remove from Cart</option>
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</select>
+			<span>
+			<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/{{item.id}}" width="50" height="50" />
+			<span class="item-desc">
+				{{item.desc}}
+			</span>
+		</span>
 		</span>
 	</div>
+	{{/each}}
 </div>
+
+<script type="text/javascript">
+	$(".quantity-picker").each( function(index, picker) {
+		var itemId = $(picker).attr("data-item-id");
+		var startingQuantity = $(picker).attr("data-starting-quantity");
+		$(picker).find("option[value=" +startingQuantity+ "]").attr("selected", "selected");
+
+		$(picker).change( function() {
+			var newQuantity = $(picker).find(":selected").val();
+			Primes.CartTracker.updateCartQuantity( itemId, newQuantity );
+		} );
+	} );
+</script>

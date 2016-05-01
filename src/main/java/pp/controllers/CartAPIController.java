@@ -39,7 +39,7 @@ public class CartAPIController
 		}
 	}
 
-	public static class RemoveFromCartAPIController extends Controller
+	public static class UpdateCartQuantityAPIController extends Controller
 	{
 		public void executeController() throws Exception
 		{
@@ -49,7 +49,7 @@ public class CartAPIController
 			long itemId = Long.parseLong( req().queryParams("itemId") );
 			int quantity = Integer.parseInt( req().queryParams("quantity") );
 
-			bl().removeItem(itemId, quantity);
+			bl().updateItemQuantity(itemId, quantity);
 
 			res().status(200);
 			res().header("Content-Type", "application/json");

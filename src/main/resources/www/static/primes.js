@@ -7,8 +7,24 @@
 
 		this.update = function() {
 			$.ajax({
-				"method": "POST",
+				"method": "GET",
 				"url": "/api/listCartItems",
+				"dataType": "json"
+			}).done( function(json) {
+				_updateHeader(json);
+			} );
+		};
+
+		this.updateCartQuantity = function(item, quantity) {
+			var param = {
+				"itemId": item,
+				"quantity": quantity
+			};
+
+			$.ajax({
+				"method": "GET",
+				"url": "/api/updateCartQuantity",
+				"data": param,
 				"dataType": "json"
 			}).done( function(json) {
 				_updateHeader(json);
@@ -22,25 +38,9 @@
 			};
 
 			$.ajax({
-				"method": "POST",
+				"method": "GET",
 				"url": "/api/addCartItem",
-				"data": JSON.stringify(param),
-				"dataType": "json"
-			}).done( function(json) {
-				_updateHeader(json);
-			} );
-		};
-
-		this.removeFromCart = function(item, quantity) {
-			var param = {
-				"itemId": item,
-				"quantity": quantity
-			};
-
-			$.ajax({
-				"method": "POST",
-				"url": "/api/removeCartItem",
-				"data": JSON.stringify(param),
+				"data": param,
 				"dataType": "json"
 			}).done( function(json) {
 				_updateHeader(json);

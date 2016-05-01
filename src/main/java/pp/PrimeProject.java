@@ -66,11 +66,11 @@ public class PrimeProject
 
 		get("/performLogout", (req, res) -> useController( new PerformLogoutController(), req, res ) );
 
-		post("/api/listCartItems", (req, res) -> useController( new CartAPIController.ListCartAPIController(), req, res ) );
+		get("/api/listCartItems", (req, res) -> useController( new CartAPIController.ListCartAPIController(), req, res ) );
 
-		post("/api/addCartItem", (req, res) -> useController( new CartAPIController.AddToCartAPIController(), req, res ) );
+		get("/api/addCartItem", (req, res) -> useController( new CartAPIController.AddToCartAPIController(), req, res ) );
 
-		post("/api/removeCartItem", (req, res) -> useController( new CartAPIController.RemoveFromCartAPIController(), req, res ) );
+		get("/api/updateCartQuantity", (req, res) -> useController(new CartAPIController.UpdateCartQuantityAPIController(), req, res ) );
 
 		staticRoute("/static", "/www/static");
 
