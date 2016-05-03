@@ -46,7 +46,7 @@ class ItemReviewDAO implements ItemReview.DAO {
 
     @Override
     public ItemReview create(ItemReview entity) throws DataAccessException {
-        String query = "INSERT INTO ItermReview (Rating, Item_id, Account_id, Description) VALUES(?, ?, ?, ?)";
+        String query = "INSERT INTO ItemReview (Rating, Item_id, Account_id, Description) VALUES(?, ?, ?, ?)";
         dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);

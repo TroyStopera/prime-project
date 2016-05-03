@@ -77,10 +77,15 @@ public class BusinessLogic
 		dao.cartAccessor().update( cart );
 	}
 
+	/** Creates the given ItemReview to the database. */
+	private void createReview(ItemReview review) throws DataAccessException
+	{
+		dao.reviewAccessor().create( review );
+	}
+
 	/** @return a list of items in the currently logged in user's cart, or an empty list */
 	public List<Cart.CartItem> getCartItems() throws DataAccessException
 	{
-		//TODO implement
 		Cart userCart = getCart();
 		return new ArrayList<Cart.CartItem> (userCart.getItemsMap().values());
 	}
@@ -196,16 +201,23 @@ public class BusinessLogic
 	}
 
 	/** @return the username of the user that is logged in, or "" if the user isn't logged in */
-	public String getUsername()
+	public String getUsername() throws DataAccessException
 	{
-		//TODO implement
-		return "";
+		if(getAccount() == null){
+			return " ";
+		}
+		else{
+			return getAccount().getUsername();
+		}
 	}
 
 	/** @return the username of the user with the given accountId, or "" if there is no such user */
-	public String getUsername(long accountId)
+	public String getUsername(long accountId) 
 	{
-		//TODO implement
+		//if(dao.accountAccessor().get( accountId ).get() != null){}
+		if(dao.accountAccessor().get( accountId ).get() != null){
+			return dao.accountAccessor().get( accountId ).get().getUsername();
+		}
 		return "";
 	}
 
@@ -217,10 +229,10 @@ public class BusinessLogic
 	}
 
 	/** @return a list of reviews for the given item */
-	public List<ItemReview> getReviewsFor(Item item)
+	public List<ItemReview> getReviewsFor(Item item) throws DataAccessException
 	{
-		//TODO implement
-		return new ArrayList<>();
+		List<ItemReview> reviews = (List<ItemReview>)dao.reviewAccessor().reviewsFor( item );
+		return reviews;
 	}
 
 	/**
@@ -231,6 +243,8 @@ public class BusinessLogic
 	 */
 	public void createReview(long itemId, int rating, String review) throws DataAccessException
 	{
-		//TODO implement
+		long accountId = getCart().getAccountId();
+		ItemReview newReview = new ItemReview(itemId, rating, review, accountId);
+		createReview(newReview);
 	}
 }
