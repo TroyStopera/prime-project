@@ -24,6 +24,10 @@ public class SQLiteDAO extends DataAccessObject {
     private static final Lock lock = new ReentrantLock();
 
     public SQLiteDAO() throws SQLException {
+        this(DATABASE_NAME);
+    }
+
+    public SQLiteDAO(String dbName) throws SQLException {
         //load the driver class so that it can register itself for DriverManager to find
         try {
             Class.forName(DRIVER_NAME);
@@ -31,7 +35,7 @@ public class SQLiteDAO extends DataAccessObject {
             throw new SQLException("Could not find SQL driver");
         }
 
-        if (connection == null) connection = DriverManager.getConnection("jdbc:sqlite:" + DATABASE_NAME);
+        if (connection == null) connection = DriverManager.getConnection("jdbc:sqlite:" + dbName);
 
         lock();
 

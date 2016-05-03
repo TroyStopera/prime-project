@@ -8,8 +8,8 @@ import java.util.Optional;
 //TODO hash passwords for security?
 public class Account extends Entity {
 
-	public static final int TYPE_USER = 0;
-	public static final int TYPE_ADMIN = 1;
+    public static final int TYPE_USER = 0;
+    public static final int TYPE_ADMIN = 1;
 
     /* Columns */
     private String username, email, password;
@@ -56,6 +56,13 @@ public class Account extends Entity {
 
     public static Account fromJson(String json) {
         return gson.fromJson(json, Account.class);
+    }
+
+    public boolean equals(Account account) {
+        return username.equals(account.username)
+                && email.equals(account.email)
+                && password.equals(account.password)
+                && type == account.type;
     }
 
     public interface DAO extends Entity.DAO<Account> {

@@ -47,6 +47,13 @@ public class ItemReview extends Entity {
         return gson.fromJson(json, ItemReview.class);
     }
 
+    public boolean equals(ItemReview review) {
+        return itemId == review.itemId
+                && rating == review.rating
+                && this.review.equals(review.review)
+                && accountId == review.accountId;
+    }
+
     public interface DAO extends Entity.DAO<ItemReview> {
 
         List<ItemReview> reviewsFor(Item item) throws DataAccessException;

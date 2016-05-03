@@ -54,6 +54,13 @@ public class Item extends Entity {
         return gson.fromJson(json, Item.class);
     }
 
+    public boolean equals(Item item) {
+        return name.equals(item.name)
+                && description.equals(item.description)
+                && costDollar == item.costDollar
+                && costCents == item.costCents;
+    }
+
     public interface DAO extends Entity.DAO<Item> {
 
         List<Item> allItems() throws DataAccessException;
