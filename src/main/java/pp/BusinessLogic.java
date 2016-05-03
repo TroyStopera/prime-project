@@ -7,7 +7,6 @@ import lib.persistence.entities.Cart;
 import lib.persistence.entities.Item;
 import lib.persistence.entities.ItemReview;
 
-import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -212,7 +211,7 @@ public class BusinessLogic
 	}
 
 	/** @return the username of the user with the given accountId, or "" if there is no such user */
-	public String getUsername(long accountId) 
+	public String getUsername(long accountId) throws DataAccessException
 	{
 		//if(dao.accountAccessor().get( accountId ).get() != null){}
 		if(dao.accountAccessor().get( accountId ).get() != null){

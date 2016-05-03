@@ -1,5 +1,6 @@
 package pp.controllers;
 
+import lib.persistence.DataAccessException;
 import lib.persistence.entities.Item;
 import lib.persistence.entities.ItemReview;
 import pp.HTMLController;
@@ -66,7 +67,7 @@ public class ItemController extends HTMLController
 		public String rating, review;
 		public String reviewerUsername;
 
-		public ControllerReview(ItemReview r)
+		public ControllerReview(ItemReview r) throws DataAccessException
 		{
 			rating = r.getRating()+ " star" +(r.getRating() != 1 ? "s" : "" );
 			review = r.getReview();
