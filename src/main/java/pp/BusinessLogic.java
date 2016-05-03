@@ -7,6 +7,7 @@ import lib.persistence.entities.Cart;
 import lib.persistence.entities.Item;
 import lib.persistence.entities.ItemReview;
 
+import java.util.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -77,10 +78,11 @@ public class BusinessLogic
 	}
 
 	/** @return a list of items in the currently logged in user's cart, or an empty list */
-	public List<Cart.CartItem> getCartItems()
+	public List<Cart.CartItem> getCartItems() throws DataAccessException
 	{
 		//TODO implement
-		return new ArrayList<>();
+		Cart userCart = getCart();
+		return new ArrayList<Cart.CartItem> (userCart.getItemsMap().values());
 	}
 
 	/**
@@ -88,11 +90,18 @@ public class BusinessLogic
 	 */
 	public int getCartCount() throws DataAccessException
 	{	
+		int totalCount = 0;
+		ArrayList<Cart.CartItem> items;
 		if(getCart() == null){
 			return 0;
 		}
 		else{
-			return getCart().getItems().size();
+			items = (ArrayList<Cart.CartItem>)getCartItems();
+			//Iterator itr = userCart.getItemsMap().entrySet().iterator();
+			for(int i=0;i<items.size();i++){
+				totalCount += items.get(i).getQuantity();
+			}
+			return totalCount;
 		}
 	}
 
@@ -101,20 +110,25 @@ public class BusinessLogic
 	 */
 	public String getCartTotal() throws DataAccessException
 	{
-		double price = 0.0;
-		Cart userCart;
-		//TODO implement
-		//get cart
+		double totalPrice = 0.0;
+		double itemPrice = 0.0;
+		Item temp;
+		String result;
+		ArrayList<Cart.CartItem> items;
 		if(getCart() == null){
 			return "0.00";
 		}
 		else{
-			userCart = getCart();
+			items = (ArrayList<Cart.CartItem>)getCartItems();
+			for(int i=0;i<items.size();i++){
+				itemPrice = 0.0;
+				temp = getItem(items.get(i).getItemId());
+				itemPrice += (double)(temp.getCostDollar() + ((double)temp.getCostCents())*0.01);
+				totalPrice += (items.get(i).getQuantity() * itemPrice);
+			}
+			result = Double.toString(totalPrice);
 		}
-		//itorate through items in cart
-		//Iterator runThrough = userCart.getItems().entrySet().Iterator();
-		//mutiple price and quantity for each item add it to total price
-		return "$0.00";
+		return result;
 	}
 
 	/**

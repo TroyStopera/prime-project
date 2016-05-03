@@ -20,9 +20,12 @@ public class Cart extends Entity {
     }
 
     public Set<CartItem> getItems() {
-        return new HashSet<>(items);
+        return new HashSet<>(items.values());
     }
 
+     public HashMap<Long, CartItem> getItemsMap() {
+        return new HashMap<Long, CartItem>(items);
+    }
 
     public void updateCart(long itemId, int quantity) {
         if (quantity <= 0) items.remove(itemId);
