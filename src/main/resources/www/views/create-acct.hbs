@@ -1,6 +1,12 @@
 <div class="login-content-wrapper">
 	<h1>Create a Prime account</h1>
+	{{#if previousLoginFailed}}
+		<h3 style="width: 100%; text-align: center; color: red">
+			Account Creation Failed. Reason: {{loginFailReason}}
+		</h3>
+	{{/if}}
 	<form action="/performAcctCreate" method="POST">
+		<input type="hidden" name="returnTo" value="{{returnTo}}" />
 		<div><input type="email" name="email" placeholder="Email" /></div>
 		<div><input type="text" name="username" placeholder="Username" /></div>
 		<div><input type="password" name="password" placeholder="Password" /></div>
@@ -12,6 +18,7 @@
 
 	<script type="text/javascript">
 		$("div.login-content-wrapper form input[type='submit']").submit( function(e) {
+			//TODO confirm the user's password
 			e.preventDefault();
 			return false;
 		} );

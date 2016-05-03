@@ -1,5 +1,9 @@
 package pp;
 
+import lib.persistence.DataAccessException;
+import lib.persistence.DataAccessObject;
+import lib.persistence.dao.SQLiteDAO;
+import lib.persistence.entities.Item;
 import pp.controllers.*;
 import spark.Request;
 import spark.Response;
@@ -24,6 +28,19 @@ public class PrimeProject
 
 		sm = new SessionManager();
 
+		if( DEBUG )
+		{
+			try
+			{
+				DataAccessObject dao = new SQLiteDAO();
+				createRandomItems(dao);
+			}
+			catch( DataAccessException | SQLException e )
+			{
+				throw new RuntimeException("Could not create random items", e);
+			}
+		}
+
 		before("/debug/*", (req, res) -> {
 			if( !DEBUG )
 				halt(404, "File Not Found");
@@ -35,11 +52,15 @@ public class PrimeProject
 
 		get("/item/:id", (req, res) -> useController( new ItemController(), req, res ) );
 
+		post("/item/:id/performCreateReview", (req, res) -> useController(new PerformCreateReviewController(), req, res) );
+
 		get("/itemImage/:id", (req, res) -> useController( new ItemImageController(), req, res ) );
 
 		get("/login", (req, res) -> useController( new LoginController(), req, res ) );
 
 		get("/createAccount", (req, res) -> useController( new CreateAcctController(), req, res ) );
+
+		post("/performAcctCreate", (req, res) -> useController( new PerformCreateAcctController(), req, res) );
 
 		post("/performLogin", (req, res) -> useController( new PerformLoginController(), req, res ) );
 
@@ -49,7 +70,7 @@ public class PrimeProject
 
 		get("/api/addCartItem", (req, res) -> useController( new CartAPIController.AddToCartAPIController(), req, res ) );
 
-		get("/api/removeCartItem", (req, res) -> useController( new CartAPIController.RemoveFromCartAPIController(), req, res ) );
+		get("/api/updateCartQuantity", (req, res) -> useController(new CartAPIController.UpdateCartQuantityAPIController(), req, res ) );
 
 		staticRoute("/static", "/www/static");
 
@@ -90,10 +111,32 @@ public class PrimeProject
 
 	private static String useController(final Controller ctrl, final Request req, final Response res) throws Exception
 	{
-		ctrl.initController(req, res, sm);
+		ctrl.initController(req, res, new SQLiteDAO(), sm);
 		ctrl.executeController();
 		ctrl.deinitController();
 		return res.body();
+	}
+
+	private static void createRandomItems(DataAccessObject dao) throws DataAccessException
+	{
+		final String[] names = {
+				"Earring",
+				"Spoon",
+				"Cup of Noodles",
+				"Red Solo Cup",
+				"Lamp",
+				"Computer Monitor",
+				"Watter Bottle",
+				"Empty Snapple Bottle",
+				"Coffee Maker",
+				"Lint Roller"
+		};
+
+		for( String name : names )
+		{
+			final Item i = new Item(name, "This is a " + name, (int) (Math.random() * 100), (int) (Math.random() * 99));
+			dao.itemAccessor().create(i);
+		}
 	}
 
 	public static Connection createDBConnection() throws IOException, SQLException

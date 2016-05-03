@@ -24,6 +24,7 @@ class ItemReviewDAO implements ItemReview.DAO {
     public List<ItemReview> reviewsFor(Item item) throws DataAccessException {
         String query = "SELECT * FROM ItemReview WHERE Item_id = ?";
         List<ItemReview> reviews = new LinkedList<>();
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, item.getId());
@@ -37,6 +38,8 @@ class ItemReviewDAO implements ItemReview.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return reviews;
     }
@@ -44,6 +47,7 @@ class ItemReviewDAO implements ItemReview.DAO {
     @Override
     public ItemReview create(ItemReview entity) throws DataAccessException {
         String query = "INSERT INTO ItermReview (Rating, Item_id, Account_id, Description) VALUES(?, ?, ?, ?)";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, entity.getRating());
@@ -58,6 +62,8 @@ class ItemReviewDAO implements ItemReview.DAO {
             else throw new DataAccessException("No ID returned for new ItemReview");
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -65,6 +71,7 @@ class ItemReviewDAO implements ItemReview.DAO {
     @Override
     public Optional<ItemReview> get(long id) throws DataAccessException {
         String query = "SELECT * FROM ItemReview WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -79,12 +86,15 @@ class ItemReviewDAO implements ItemReview.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 
     @Override
     public ItemReview update(ItemReview entity) throws DataAccessException {
         String query = "UPDATE ItemReview SET Rating = ?, Description = ? WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setInt(1, entity.getRating());
@@ -94,6 +104,8 @@ class ItemReviewDAO implements ItemReview.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }
@@ -101,6 +113,7 @@ class ItemReviewDAO implements ItemReview.DAO {
     @Override
     public void delete(ItemReview entity) throws DataAccessException {
         String query = "DELETE FROM ItemReview WHERE id = ?";
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, entity.getId());
@@ -108,6 +121,8 @@ class ItemReviewDAO implements ItemReview.DAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
     }
 

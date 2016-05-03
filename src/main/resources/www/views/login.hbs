@@ -2,12 +2,12 @@
 	<h1>Login to Prime</h1>
 	{{#if previousLoginFailed}}
 		<h3 style="width: 100%; text-align: center; color: red">
-			Login Failed.
+			Login Failed. Reason: {{loginFailReason}}
 		</h3>
 	{{/if}}
 	<form action="/performLogin" method="POST">
 		<input type="hidden" name="returnTo" value="{{returnTo}}" />
-		<div><input type="text" name="username" placeholder="Username" /></div>
+		<div><input type="text" name="email" placeholder="Email" /></div>
 		<div><input type="password" name="password" placeholder="Password" /></div>
 		<div>
 			<input type="submit" value="Login" />
@@ -17,16 +17,16 @@
 
 	<script type="text/javascript">
 		$("div.login-content-wrapper form input[type='submit']").submit( function(e) {
-			var username = $("div.login-content-wrapper form input[type='text']"),
+			var email    = $("div.login-content-wrapper form input[type='text']"),
 				password = $("div.login-content-wrapper form input[type='password']");
 
-			if( $(username).val() === '' || $(password).val() === '' )
+			if( $(email).val() === '' || $(password).val() === '' )
 			{
 				if( $(password).val() === '' )
 					$(password).focus();
 
-				if( $(username).val() === '' )
-					$(username).focus();
+				if( $(email).val() === '' )
+					$(email).focus();
 
 				e.preventDefault();
 				return false;

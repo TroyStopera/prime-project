@@ -18,6 +18,7 @@ class CartDAO implements Cart.DAO {
         String query = "SELECT * FROM CartEntry WHERE Account_id = ?";
         Cart cart = new Cart(accountId);
         dao.setId(cart, accountId);
+        dao.lock();
         try {
             PreparedStatement statement = dao.connection.prepareStatement(query);
             statement.setLong(1, accountId);
@@ -30,6 +31,8 @@ class CartDAO implements Cart.DAO {
             }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return cart;
     }
@@ -38,6 +41,7 @@ class CartDAO implements Cart.DAO {
     public Cart update(Cart entity) throws DataAccessException {
         //could be improved upon... doesn't NEED to delete all previous entries
         String query = "INSERT INTO CartEntry (Quantity, Item_id, Account_id) VALUES(?, ?, ?)";
+        dao.lock();
         try {
             //delete previous cart contents
             PreparedStatement delete = dao.connection.prepareStatement("DELETE FROM CartEntry WHERE Account_id = ?");
@@ -57,6 +61,8 @@ class CartDAO implements Cart.DAO {
                 }
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
+        } finally {
+            dao.unlock();
         }
         return entity;
     }

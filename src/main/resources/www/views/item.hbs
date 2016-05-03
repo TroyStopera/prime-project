@@ -1,19 +1,29 @@
 <span class="item">
-	<h1 class="item-name">Widget</h1>
-	<div class="price">
-		<span class="sale-price">$2,999,999</span>
-		<span class="old-price">$3,000,000</span>
-		<span class="sale-desc">(&lt;1% off!)</span>
-	</div>
-	<span>
-		<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/0" width="50" height="50" />
-		<span class="item-desc">
-			Features:
-			<ul>
-				<li>Obscenely overpriced</li>
-				<li>Does nothing</li>
-				<li>Why would you buy this?</li>
-			</ul>
+	{{#if item}}
+		<h1 class="item-name">{{item.name}}</h1>
+		<div class="price">
+			<span class="sale-price">{{item.cost}}</span>
+		</div>
+		{{#if isUserLoggedIn}}
+			<form>
+					<input type="button" class="addToCartButton" data-item-id="{{item.id}}" value="Add to cart" />
+					<script type="text/javascript">
+						$("input.addToCartButton").each( function(index, button) {
+							$(button).click( function() {
+								var itemId = $(button).attr("data-item-id");
+								Primes.CartTracker.addToCart( itemId, 1 );
+							} );
+						} );
+					</script>
+				</form>
+		{{/if}}
+		<span>
+			<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/{{item.id}}" width="50" height="50" />
+			<span class="item-desc">
+				{{item.desc}}
+			</span>
 		</span>
-	</span>
+	{{^}}
+		<h1>No such item exists</h1>
+	{{/if}}
 </span>

@@ -3,8 +3,10 @@ package pp;
 import com.github.jknack.handlebars.Context;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
+import com.github.jknack.handlebars.context.FieldValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
 import com.github.jknack.handlebars.context.MethodValueResolver;
+import lib.persistence.entities.Item;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +108,7 @@ public abstract class HTMLController extends Controller
 				.newBuilder( HTMLController.this.timer )
 				.combine( HTMLController.this.controllerContext )
 				.combine( viewContext )
-				.resolver( MapValueResolver.INSTANCE, MethodValueResolver.INSTANCE )
+				.resolver(MapValueResolver.INSTANCE, MethodValueResolver.INSTANCE, FieldValueResolver.INSTANCE)
 				.build();
 
 			//compile and apply the template
@@ -116,11 +118,27 @@ public abstract class HTMLController extends Controller
 		}
 	}
 
+	//helper objects
+	protected class ControllerItem
+	{
+		public final long id;
+		public final String name, desc, cost;
+
+		public ControllerItem(Item item)
+		{
+			this.id = item.getId();
+			this.name = item.getName();
+			this.desc = item.getDescription();
+			this.cost = String.format("$%d.%2d", item.getCostDollar(), item.getCostCents());
+		}
+	}
+
 	//lifecycle functions
 	public final void executeController() throws Exception
 	{
 		bindData("isUserLoggedIn", isUserLoggedIn());
-		bindData("username", username());
+		bindData("username", bl().getUsername());
+
 		bindData("url", req().pathInfo());
 
 		bindData("cartCount", bl().getCartCount());
