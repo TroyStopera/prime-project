@@ -4,6 +4,7 @@ import lib.persistence.DataAccessException;
 import lib.persistence.Entity;
 
 import java.util.*;
+import java.util.concurrent.SynchronousQueue;
 
 public class Cart extends Entity {
 
@@ -39,6 +40,10 @@ public class Cart extends Entity {
         return gson.fromJson(json, Cart.class);
     }
 
+    public boolean equals(Cart cart) {
+        return accountId == cart.accountId && items.equals(cart.items);
+    }
+
     public static class CartItem {
 
         private final long itemId;
@@ -61,6 +66,19 @@ public class Cart extends Entity {
             this.quantity = quantity;
         }
 
+        @Override
+        public boolean equals(Object o) {
+            if (o instanceof CartItem) {
+                CartItem cartItem = (CartItem) o;
+                return itemId == cartItem.itemId && quantity == cartItem.quantity;
+            }
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return "Item: " + itemId + " x" + quantity;
+        }
     }
 
     public interface DAO {
