@@ -117,8 +117,7 @@ public class BusinessLogic
 	 */
 	public String getCartTotal() throws DataAccessException
 	{
-		double totalPrice = 0.0;
-		double itemPrice = 0.0;
+		int dollars = 0; int cents = 0; int removeCents = 0;
 		Item temp;
 		String result;
 		ArrayList<Cart.CartItem> items;
@@ -128,12 +127,20 @@ public class BusinessLogic
 		else{
 			items = (ArrayList<Cart.CartItem>)getCartItems();
 			for(int i=0;i<items.size();i++){
-				itemPrice = 0.0;
 				temp = getItem(items.get(i).getItemId());
-				itemPrice += (double)(temp.getCostDollar() + ((double)temp.getCostCents())*0.01);
-				totalPrice += (items.get(i).getQuantity() * itemPrice);
+				dollars += temp.getCostDollar()* (items.get(i).getQuantity());
+				cents += temp.getCostCents()* (items.get(i).getQuantity());
 			}
-			result = Double.toString(totalPrice);
+			removeCents = (int)(cents/100);
+			dollars += removeCents; cents -= (removeCents*100);
+
+			if(cents < 10){
+				result = dollars+".0"+cents;
+			}
+			else{
+				result = dollars+"."+cents;	
+			}
+			
 		}
 		return result;
 	}
