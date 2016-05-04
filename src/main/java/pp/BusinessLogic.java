@@ -296,4 +296,18 @@ public class BusinessLogic
 		ItemReview newReview = new ItemReview(itemId, rating, review, accountId);
 		createReview(newReview);
 	}
+
+	public List<Item> searchItems(String searchString) throws DataAccessException
+	{
+		List<Item> results = new ArrayList<>();
+
+		searchString = searchString.toLowerCase();
+
+		if( !searchString.isEmpty() )
+			for( Item i : dao.itemAccessor().allItems() )
+				if( i.getName().toLowerCase().contains(searchString) || i.getDescription().toLowerCase().contains(searchString) )
+					results.add( i );
+
+		return results;
+	}
 }
