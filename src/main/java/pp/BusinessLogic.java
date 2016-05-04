@@ -165,8 +165,8 @@ public class BusinessLogic
 	 */
 	public void addItem(long itemId, int quantity) throws DataAccessException
 	{
-		ArrayList<Cart.CartItem> cartItems = getCartItems();
-		int totalQuantity = -;
+		ArrayList<Cart.CartItem> cartItems = (ArrayList<Cart.CartItem>) getCartItems();
+		int totalQuantity = 0;
 		//make sure quantity is posotive and itemId exists
 		if(quantity > 0 && getItem(itemId) != null){
 			Cart userCart = getCart(); //will be null if the user isn't logged in
@@ -190,10 +190,18 @@ public class BusinessLogic
 	 */
 	public void removeItem(long itemId, int quantity) throws DataAccessException
 	{
+		ArrayList<Cart.CartItem> cartItems = (ArrayList<Cart.CartItem>) getCartItems();
+		int totalQuantity = 0;
 		//make sure quantity is posotive and itemId exists
 		if(quantity < 0 && getItem(itemId) != null){
 			Cart userCart = getCart(); //will be null if the user isn't logged in
-			userCart.updateCart(itemId, quantity);//add item and quantity to cart
+			for(int i=0;i<cartItems.size();i++){
+				if(cartItems.get(i).getItemId() == itemId){
+					totalQuantity += cartItems.get(i).getQuantity();
+				}
+			}
+			totalQuantity -= quantity;
+			userCart.updateCart(itemId, totalQuantity);//remove item and quantity to cart
 			writeCart(userCart);//write the cart the database	
 		}	
 		//ADD ERROR SAYING NEEDS TO BE NEGATIVE AND A REAL ITEM
