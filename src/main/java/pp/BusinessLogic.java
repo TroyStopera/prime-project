@@ -145,7 +145,12 @@ public class BusinessLogic
 	public String getItemImageMime(long itemId) throws DataAccessException
 	{
 		//TODO implement
-		return null;
+		if(imageDB.getImageType(itemId) == null){
+			return null;
+		}
+		else{
+			return imageDB.getImageType(itemId);
+		}
 	}
 
 	/**
@@ -155,7 +160,12 @@ public class BusinessLogic
 	public byte[] getItemImageData(long itemId) throws DataAccessException
 	{
 		//TODO implement
-		return null;
+		if(imageDB.getImageType(itemId) == null){
+			return null;
+		}
+		else{
+			return imageDB.getImageData(itemId);
+		}
 	}
 
 	/**
