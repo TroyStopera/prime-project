@@ -1,5 +1,6 @@
 package pp;
 
+import lib.imagedb.ImageDB;
 import lib.persistence.DataAccessException;
 import lib.persistence.DataAccessObject;
 import lib.persistence.entities.Account;
@@ -15,11 +16,13 @@ public class BusinessLogic
 {
 	private final Controller ctrl;
 	private final DataAccessObject dao;
+	private final ImageDB imageDB;
 
-	public BusinessLogic(Controller ctrl, DataAccessObject dao)
+	public BusinessLogic(Controller ctrl, DataAccessObject dao, ImageDB imageDB)
 	{
 		this.ctrl = ctrl;
 		this.dao = dao;
+		this.imageDB = imageDB;
 	}
 
 	/** @return true if the user is logged in */

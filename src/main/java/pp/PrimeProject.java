@@ -1,5 +1,7 @@
 package pp;
 
+import lib.imagedb.ImageDB;
+import lib.imagedb.InMemoryImageDB;
 import lib.persistence.DataAccessException;
 import lib.persistence.DataAccessObject;
 import lib.persistence.dao.SQLiteDAO;
@@ -21,12 +23,14 @@ public class PrimeProject
 {
 	private static final boolean DEBUG = true; //set this to FALSE in non-development builds
 	private static SessionManager sm;
+	private static ImageDB imageDB;
 
 	public static void main(String[] args)
 	{
 		port(8080);
 
 		sm = new SessionManager();
+		imageDB = new InMemoryImageDB();
 
 		if( DEBUG )
 		{
@@ -111,7 +115,7 @@ public class PrimeProject
 
 	private static String useController(final Controller ctrl, final Request req, final Response res) throws Exception
 	{
-		ctrl.initController(req, res, new SQLiteDAO(), sm);
+		ctrl.initController(req, res, new SQLiteDAO(), imageDB, sm);
 		ctrl.executeController();
 		ctrl.deinitController();
 		return res.body();

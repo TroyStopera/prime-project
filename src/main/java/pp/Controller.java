@@ -1,5 +1,6 @@
 package pp;
 
+import lib.imagedb.ImageDB;
 import lib.persistence.DataAccessObject;
 import lib.persistence.entities.Account;
 import spark.Request;
@@ -21,6 +22,7 @@ public abstract class Controller
 	private Request req;
 	private Response res;
 	private DataAccessObject dao;
+	private ImageDB imageDB;
 	private SessionManager sm;
 	private BusinessLogic bl;
 
@@ -120,13 +122,14 @@ public abstract class Controller
 	}
 
 	//lifecycle functions
-	final void initController(Request req, Response res, DataAccessObject dao, SessionManager sm) throws SQLException
+	final void initController(Request req, Response res, DataAccessObject dao, ImageDB imageDB, SessionManager sm) throws SQLException
 	{
 		this.req = req;
 		this.res = res;
 		this.sm = sm;
 		this.dao = dao;
-		this.bl = new BusinessLogic(this, dao);
+		this.imageDB = imageDB;
+		this.bl = new BusinessLogic(this, dao, imageDB);
 	}
 
 	public abstract void executeController() throws Exception;
