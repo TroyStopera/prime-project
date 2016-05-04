@@ -42,6 +42,11 @@ public abstract class HTMLController extends Controller
 		externalJS.add( jsURL );
 	}
 
+	protected final void addWebFont(String webfontURL)
+	{
+		externalCSS.add( webfontURL );
+	}
+
 	protected final void bindData(String key, Object value)
 	{
 		controllerContext.put( key, value );
@@ -143,12 +148,14 @@ public abstract class HTMLController extends Controller
 
 		addJS("/static/jquery.js");
 		addJS("/static/primes.js");
+
 		addCSS("/static/main.css");
 		addCSS("/static/header.css");
 		addCSS("/static/footer.css");
 		addCSS("/static/panel.css");
 		addCSS("/static/item.css");
-		addCSS("/static/homepage.css");
+
+		addWebFont("https://fonts.googleapis.com/css?family=Lato");
 
 		generatePage();
 		finalizePageGeneration();
@@ -169,7 +176,6 @@ public abstract class HTMLController extends Controller
 		for( String js : externalJS )
 			page += String.format("<script src='%s'></script>\n", js);
 
-		page += "<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>";
 		page += "</head>\n";
 		page += "<body>\n";
 

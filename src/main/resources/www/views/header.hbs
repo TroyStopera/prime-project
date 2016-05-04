@@ -10,10 +10,10 @@
 		{{#unless isLoginPage}}
 			{{#if isUserLoggedIn}}
 				<li class="login"><a href="/performLogout?returnTo={{url}}">Logout</a></li>
+				<li class="cart"><a href="/cart">Cart: {{cartCount}} items, ({{cartTotal}})</a></li>
 			{{^}}
 				<li class="login"><a href="/login?returnTo={{url}}">Login</a></li>
 			{{/if}}
-		<li class="cart"><a href="/cart">Cart: {{cartCount}} items, ({{cartTotal}})</a></li>
 		{{/unless}}
 	</ul>
 	<script type="text/javascript">

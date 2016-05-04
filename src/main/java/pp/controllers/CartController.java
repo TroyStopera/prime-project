@@ -11,6 +11,12 @@ public class CartController extends HTMLController
 {
 	protected void generatePage() throws Exception
 	{
+		if( !isUserLoggedIn() )
+		{
+			res().redirect("/", 302);
+			return;
+		}
+
 		outputView("/www/views/header.hbs");
 
 		List<ControllerCartItem> cartEntry = new ArrayList<>();

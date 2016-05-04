@@ -2,3 +2,10 @@ body {
 	background-color: rgba(0,0,0, 0.05);
 	font-family: 'Lato';
 }
+
+div.main-content-wrapper {
+	margin-left: 5%;
+	width: 90%;
+	padding-left: 2%;
+	padding-right: 2%;
+}
