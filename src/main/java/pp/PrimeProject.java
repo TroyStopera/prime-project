@@ -2,7 +2,6 @@ package pp;
 
 import lib.imagedb.ImageDB;
 import lib.imagedb.InMemoryImageDB;
-import lib.persistence.DataAccessException;
 import lib.persistence.DataAccessObject;
 import lib.persistence.dao.SQLiteDAO;
 import lib.persistence.entities.Item;
@@ -10,6 +9,8 @@ import pp.controllers.*;
 import spark.Request;
 import spark.Response;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,7 +40,7 @@ public class PrimeProject
 				DataAccessObject dao = new SQLiteDAO();
 				createRandomItems(dao);
 			}
-			catch( DataAccessException | SQLException e )
+			catch( Exception e )
 			{
 				throw new RuntimeException("Could not create random items", e);
 			}
@@ -121,7 +122,7 @@ public class PrimeProject
 		return res.body();
 	}
 
-	private static void createRandomItems(DataAccessObject dao) throws DataAccessException
+	private static void createRandomItems(DataAccessObject dao) throws Exception
 	{
 		final String[] names = {
 				"Earring",
@@ -136,10 +137,13 @@ public class PrimeProject
 				"Lint Roller"
 		};
 
+		final BufferedImage img = ImageIO.read( PrimeProject.class.getResourceAsStream("/item_images/earrings.jpg") );
+
 		for( String name : names )
 		{
 			final Item i = new Item(name, "This is a " + name, (int) (Math.random() * 100), (int) (Math.random() * 99));
 			dao.itemAccessor().create(i);
+			imageDB.put( i.getId(), img );
 		}
 	}
 
