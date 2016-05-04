@@ -215,7 +215,21 @@ public class BusinessLogic
 	 */
 	public void updateItemQuantity(long itemId, int quantity) throws DataAccessException
 	{
-		//TODO implement
+		Cart userCart = getCart();
+		if(quantity == 0){
+			ArrayList<Cart.CartItem> cartItems = (ArrayList<Cart.CartItem>) getCartItems();
+			for(int i=0;i<cartItems.size();i++){
+				if(cartItems.get(i).getItemId() == itemId){
+					cartItems.remove(i);
+					i--;
+				}
+			}
+		}
+		else{
+			userCart.updateCart(itemId, quantity);
+			writeCart(userCart);
+		}
+
 	}
 
 	/** @return the username of the user that is logged in, or "" if the user isn't logged in */
