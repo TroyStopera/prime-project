@@ -33,7 +33,6 @@ Full Stack Application Engineering Project
 			- `java` - Java code goes in here
 			- `resources` - files needed by the webserver that aren't code go in here
 				- `www/index.html` - the homepage
-				- `www/debug/db.html` - the HTML page for the DB query tester
 				- `www/static` - any files put in here are served from `http://localhost:8080/static/`. So file named `jquery.js` will be accessible from `http://localhost:8080/static/jquery.js`.
 		- `test/java` - Java unit tests go in here
 	- `docs` - documentation goes in here

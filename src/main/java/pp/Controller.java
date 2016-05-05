@@ -32,6 +32,12 @@ public abstract class Controller
 
 	protected final BusinessLogic bl() { return bl; }
 
+	//This should only be used by the inner classes of DebugController
+	protected final DataAccessObject dao()
+	{
+		return dao;
+	}
+
 	/**
 	 * Attempts to log the user in.
 	 * @return true if the user is logged in, false if the user supplied the wrong credentials

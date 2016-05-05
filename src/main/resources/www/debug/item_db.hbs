@@ -1,0 +1,28 @@
+<h1>Item</h1>
+<table border="1">
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>desc</th>
+		<th>costDollar</th>
+		<th>costCents</th>
+	</tr>
+
+	{{#each item}}
+		<tr>
+			<td>{{getId}}</td>
+			<td>{{getName}}</td>
+			<td>{{getDescription}}</td>
+			<td>{{getCostDollar}}</td>
+			<td>{{getCostCents}}</td>
+		</tr>
+	{{/each}}
+
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>desc</th>
+		<th>costDollar</th>
+		<th>costCents</th>
+	</tr>
+</table>

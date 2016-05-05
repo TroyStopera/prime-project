@@ -14,4 +14,16 @@ public class DebugController
 			outputView("/www/views/footer.hbs");
 		}
 	}
+
+	public static class ItemDBViewer extends HTMLController
+	{
+		@Override
+		protected void generatePage() throws Exception
+		{
+			outputView("/www/views/header.hbs");
+			outputView("/www/debug/item_db.hbs")
+				.bindData("item", dao().itemAccessor().allItems());
+			outputView("/www/views/footer.hbs");
+		}
+	}
 }

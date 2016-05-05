@@ -76,7 +76,8 @@ public class PrimeProject
 
 		staticRoute("/static", "/www/static");
 
-		get("/debug/db", (req, res) -> useController( new DebugController.DashboardController(), req, res ) );
+		get("/debug/", (req, res) -> useController( new DebugController.DashboardController(), req, res ) );
+		get("/debug/db/item", (req, res) -> useController( new DebugController.ItemDBViewer(), req, res ) );
 
 		after((req, res) -> {
 			//does the user support gzip?
