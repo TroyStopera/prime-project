@@ -1,5 +1,6 @@
+<a href="/debug">Back to Debug Dashboard</a>
 <h1>Account</h1>
-<table border="1">
+<table class="database-table">
 	<tr>
 		<th>id</th>
 		<th>type</th>
@@ -14,7 +15,7 @@
 			<td>{{getType}}</td>
 			<td>{{getUsername}}</td>
 			<td>{{getEmail}}</td>
-			<td>{{getPassword}}</td>
+			<td class="password-field">{{getPassword}}</td>
 		</tr>
 	{{/each}}
 
@@ -26,3 +27,36 @@
 		<th>password (salted &amp; hashed)</th>
 	</tr>
 </table>
+<script type="text/javascript">
+	$("td.password-field").each( function(index, elem) {
+		var pass = $(elem).text();
+		var hide = $("<span></span>");
+		var show = $("<span></span>");
+
+		$(elem).text("");
+		$(elem).append( hide, show );
+
+		$(hide).append(
+			pass,
+			$("<input type='button' value='Hide' />")
+			);
+
+		$(show).append(
+			$("<input type='button' value='Show' />")
+			);
+
+		$(hide).find("input").click( function(e) {
+			e.preventDefault();
+			$(hide).css("display", "none");
+			$(show).css("display", "");
+		} );
+
+		$(show).find("input").click( function(e) {
+			e.preventDefault();
+			$(hide).css("display", "");
+			$(show).css("display", "none");
+		} );
+
+		$(hide).css("display", "none");
+	} );
+</script>

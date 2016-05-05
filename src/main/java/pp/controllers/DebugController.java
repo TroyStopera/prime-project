@@ -20,6 +20,8 @@ public class DebugController
 		@Override
 		protected void generatePage() throws Exception
 		{
+			addCSS("/static/debug.css");
+
 			outputView("/www/views/header.hbs");
 			outputView("/www/debug/acct_db.hbs")
 					.bindData("account", dao().accountAccessor().allAccounts());
@@ -32,6 +34,8 @@ public class DebugController
 		@Override
 		protected void generatePage() throws Exception
 		{
+			addCSS("/static/debug.css");
+
 			outputView("/www/views/header.hbs");
 			outputView("/www/debug/item_db.hbs")
 				.bindData("item", dao().itemAccessor().allItems());
