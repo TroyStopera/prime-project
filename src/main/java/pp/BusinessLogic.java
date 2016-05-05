@@ -152,7 +152,6 @@ public class BusinessLogic
 	 */
 	public String getItemImageMime(long itemId) throws DataAccessException
 	{
-		//TODO implement
 		if(imageDB.getImageType(itemId) == null){
 			return null;
 		}
@@ -167,7 +166,6 @@ public class BusinessLogic
 	 */
 	public byte[] getItemImageData(long itemId) throws DataAccessException
 	{
-		//TODO implement
 		if(imageDB.getImageType(itemId) == null){
 			return null;
 		}
@@ -271,8 +269,23 @@ public class BusinessLogic
 	/** @return the featured item for the current user */
 	public Item getFeaturedItem() throws DataAccessException
 	{
-		//TODO implement
-		return getItem(1);
+		List<Item> items = dao.itemAccessor().allItems();
+		final int index = Utils.randInt( 0, items.size() );
+		return items.get( index );
+	}
+
+	/** @return the featured item for the current user */
+	public List<Item> getPopularItems(int count) throws DataAccessException
+	{
+		List<Item> items = dao.itemAccessor().allItems();
+		List<Item> popularItems = new ArrayList<>();
+		for( int x = 0; x < count; x++ )
+		{
+			final int index = Utils.randInt( 0, items.size() );
+			popularItems.add( items.remove(index) );
+		}
+
+		return popularItems;
 	}
 
 	/** @return a list of reviews for the given item */
@@ -293,5 +306,19 @@ public class BusinessLogic
 		long accountId = getCart().getAccountId();
 		ItemReview newReview = new ItemReview(itemId, rating, review, accountId);
 		createReview(newReview);
+	}
+
+	public List<Item> searchItems(String searchString) throws DataAccessException
+	{
+		List<Item> results = new ArrayList<>();
+
+		searchString = searchString.toLowerCase();
+
+		if( !searchString.isEmpty() )
+			for( Item i : dao.itemAccessor().allItems() )
+				if( i.getName().toLowerCase().contains(searchString) || i.getDescription().toLowerCase().contains(searchString) )
+					results.add( i );
+
+		return results;
 	}
 }

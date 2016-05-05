@@ -9,16 +9,13 @@ import com.github.jknack.handlebars.context.MethodValueResolver;
 import lib.persistence.entities.Item;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public abstract class HTMLController extends Controller
 {
-	private final List<String> externalCSS = new ArrayList<>();
-	private final List<String> externalJS = new ArrayList<>();
+	private final Set<String> externalCSS = new HashSet<>();
+	private final Set<String> externalJS = new HashSet<>();
 	private final List<View> output = new ArrayList<>();
 	private final Map<String, Object> controllerContext = new HashMap<>();
 	private final PageGenerationTimer timer = new PageGenerationTimer();
@@ -43,6 +40,11 @@ public abstract class HTMLController extends Controller
 	protected final void addJS(String jsURL)
 	{
 		externalJS.add( jsURL );
+	}
+
+	protected final void addWebFont(String webfontURL)
+	{
+		externalCSS.add( webfontURL );
 	}
 
 	protected final void bindData(String key, Object value)
@@ -143,6 +145,17 @@ public abstract class HTMLController extends Controller
 
 		bindData("cartCount", bl().getCartCount());
 		bindData("cartTotal", bl().getCartTotal());
+
+		addJS("/static/jquery.js");
+		addJS("/static/primes.js");
+
+		addCSS("/static/main.css");
+		addCSS("/static/header.css");
+		addCSS("/static/footer.css");
+		addCSS("/static/panel.css");
+		addCSS("/static/item.css");
+
+		addWebFont("https://fonts.googleapis.com/css?family=Lato");
 
 		generatePage();
 		finalizePageGeneration();

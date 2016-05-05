@@ -2,18 +2,18 @@
 	<ul>
 		<li class="logo"><a href="/">Prime</a></li>
 		<li class="search">
-			<form>
-				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
+			<form action="/search" method="GET">
+				<input type="text" name="q" placeholder="Search" /><input type="submit" value="Search" />
 			</form>
 		</li>
 
 		{{#unless isLoginPage}}
 			{{#if isUserLoggedIn}}
 				<li class="login"><a href="/performLogout?returnTo={{url}}">Logout</a></li>
+				<li class="cart"><a href="/cart">Cart: {{cartCount}} items, ({{cartTotal}})</a></li>
 			{{^}}
 				<li class="login"><a href="/login?returnTo={{url}}">Login</a></li>
 			{{/if}}
-		<li class="cart"><a href="/cart">Cart: {{cartCount}} items, ({{cartTotal}})</a></li>
 		{{/unless}}
 	</ul>
 	<script type="text/javascript">
@@ -34,5 +34,10 @@
 		$("header ul li").each( function(index, element) {
 			$(element).outerHeight( hei );
 		} );
+
+		{{#if isSearchPage}}
+		//set search box
+		$("input[type='text']").val( "{{searchString}}" );
+		{{/if}}
 	</script>
 </header>
