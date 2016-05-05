@@ -3,11 +3,11 @@
 <head>
 	<title>Prime</title>
 	<script src="/static/jquery.js"></script>
-	<link href="/static/header.css" rel="stylesheet" type="text/css" />
-	<link href="/static/footer.css" rel="stylesheet" type="text/css" />
-	<link href="/static/panel.css" rel="stylesheet" type="text/css" />
-	<link href="/static/item.css" rel="stylesheet" type="text/css" />
-	<link href="/static/main.css" rel="stylesheet" type="text/css" />
+	<link rel= "stylesheet" type = "text/css" href= "static/header.css"/>
+	
+	<link rel= "stylesheet" type = "text/css" href= "static/item.css"/>
+	<link rel= "stylesheet" type = "text/css" href= "static/main.css"/>
+	<link rel= "stylesheet" type = "text/css" href= "../tatic/footer.css"/>
 	<style>
 		div.main-content-wrapper {
 			margin-left: 5%;
@@ -17,21 +17,13 @@
 		}
 		span.featured-item {
 		}
+
 	</style>
 </head>
 <body>
 <header>
-	<ul>
-		<li class="logo"><a href="#">Prime</a></li>
-		<li class="search">
-			<form>
-				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
-			</form>
-		</li>
 
-		<li class="login"><a href="#">Login</a></li>
-		<li class="cart"><a href="#">Cart</a></li>
-	</ul>
+
 	<script type="text/javascript">
 		//fix form height
 		var hei = Math.max(
@@ -53,21 +45,24 @@
 	</script>
 </header>
 <div class = "back">
-	<img src="/src/main/resources/item_images/sofa.jpg">
+	<img src="../item_images/sofa.jpg">
 </div>
 <nav>
 	<ul>
         <li class = "logo"><a href="prime.html">Prime</a></li>
 		<li class="login"><a href="login.html">Login</a></li>
 		<li class="cart"><a href="cart.html">Cart</a></li>
+		<form>
+				<input type="text" placeholder="Search" /><input type="submit" value="Search" />
+		</form>
 	</ul></nav>
 <div class = "row">
 
 <table>
 <tr>
-<td><img src="/src/main/resources/item_images/goods.png"/></td>
-<td><img src="/src/main/resources/item_images/acceso.jpg"/></td>
-<td><img src="/src/main/resources/item_images/gadget.jpg"/></td>
+<td><img src="../item_images/goods.png"/></td>
+<td><img src="../item_images/acceso.jpg"/></td>
+<td><img src="../item_images/gadget.jpg"/></td>
 </tr><table>
     </div>
 <div class="main-content-wrapper">
