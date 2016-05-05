@@ -11,12 +11,7 @@ import spark.Response;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import static spark.Spark.*;
 
@@ -81,17 +76,7 @@ public class PrimeProject
 
 		staticRoute("/static", "/www/static");
 
-		get("/debug/db", (req, res) -> {
-			try( InputStream in = PrimeProject.class.getResourceAsStream("/www/debug/db.html");
-			     ByteArrayOutputStream out = new ByteArrayOutputStream() )
-			{
-				res.status(200);
-				res.header("Content-Type", "text/html");
-				return Utils.getFileText( in );
-			}
-		});
-
-		get("/debug/dbQuery", (req, res) -> useController( new DBQueryDebugController(), req, res ) );
+		get("/debug/db", (req, res) -> useController( new DebugController.DashboardController(), req, res ) );
 
 		after((req, res) -> {
 			//does the user support gzip?
@@ -147,10 +132,5 @@ public class PrimeProject
 			dao.itemAccessor().create(i);
 			imageDB.put( i.getId(), img );
 		}
-	}
-
-	public static Connection createDBConnection() throws IOException, SQLException
-	{
-		return DriverManager.getConnection("jdbc:derby:memory:myDB;create=true");
 	}
 }
