@@ -11,6 +11,7 @@ import lib.persistence.entities.ItemReview;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 
 public class BusinessLogic
 {
@@ -233,19 +234,16 @@ public class BusinessLogic
 	public void updateItemQuantity(long itemId, int quantity) throws DataAccessException
 	{
 		Cart userCart = getCart();
+		System.out.println(quantity);
 		if(quantity == 0){
-			ArrayList<Cart.CartItem> cartItems = (ArrayList<Cart.CartItem>) getCartItems();
-			for(int i=0;i<cartItems.size();i++){
-				if(cartItems.get(i).getItemId() == itemId){
-					cartItems.remove(i);
-					i--;
-				}
-			}
+			HashMap<Long, Cart.CartItem> cartItems = (HashMap<Long, Cart.CartItem>) userCart.getItemsMap();
+			cartItems.get(itemId).setQuantity(0);
+
 		}
 		else{
 			userCart.updateCart(itemId, quantity);
-			writeCart(userCart);
 		}
+		writeCart(userCart);
 
 	}
 
