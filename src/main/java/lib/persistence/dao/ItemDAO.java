@@ -123,11 +123,13 @@ class ItemDAO implements Item.DAO {
     }
 
     //helper method for inflating Items
-    private static Item fromResultSet(ResultSet resultSet) throws SQLException {
+    private Item fromResultSet(ResultSet resultSet) throws SQLException {
         String name = resultSet.getString("Name");
         String description = resultSet.getString("Description");
         int dollars = resultSet.getInt("PriceDollars");
         int cents = resultSet.getInt("PriceCents");
-        return new Item(name, description, dollars, cents);
+        Item i = new Item(name, description, dollars, cents);
+	    dao.setId(i, resultSet.getInt("id"));
+	    return i;
     }
 }

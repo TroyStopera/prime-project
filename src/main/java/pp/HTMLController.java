@@ -133,6 +133,11 @@ public abstract class HTMLController extends Controller
 			this.desc = item.getDescription();
 			this.cost = String.format("$%d.%2d", item.getCostDollar(), item.getCostCents());
 		}
+
+		public String toString()
+		{
+			return String.format("ControllerItem[id=%d, name=%s, desc=%s, cost=%s]", id, name, desc, cost);
+		}
 	}
 
 	//lifecycle functions
