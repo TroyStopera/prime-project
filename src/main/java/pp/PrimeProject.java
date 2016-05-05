@@ -1,7 +1,7 @@
 package pp;
 
 import lib.imagedb.ImageDB;
-import lib.imagedb.InMemoryImageDB;
+import lib.imagedb.PersistentImageDB;
 import lib.persistence.DataAccessObject;
 import lib.persistence.dao.SQLiteDAO;
 import lib.persistence.entities.Item;
@@ -26,7 +26,7 @@ public class PrimeProject
 		port(8080);
 
 		sm = new SessionManager();
-		imageDB = new InMemoryImageDB();
+		imageDB = new PersistentImageDB();
 
 		if( DEBUG )
 		{
