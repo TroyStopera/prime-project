@@ -111,6 +111,10 @@ public class PrimeProject
 
 	private static void createRandomItems(DataAccessObject dao) throws Exception
 	{
+		//Only generate items for the database if the database is empty
+		if( !dao.itemAccessor().allItems().isEmpty() )
+			return;
+
 		final String[] names = {
 				"Earring",
 				"Spoon",
