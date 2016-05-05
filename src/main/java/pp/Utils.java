@@ -40,13 +40,6 @@ public class Utils
 		}
 	}
 
-	public static byte[] getFileBytes(InputStream in) throws IOException
-	{
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		copyStream(in, out);
-		return out.toByteArray();
-	}
-
 	public static String getFileText(InputStream in) throws IOException
 	{
 		try( ByteArrayOutputStream out = new ByteArrayOutputStream() )
@@ -58,5 +51,10 @@ public class Utils
 			byte[] fileData = out.toByteArray();
 			return new String(fileData, StandardCharsets.UTF_8);
 		}
+	}
+
+	public static int randInt(int a, int b)
+	{
+		return (int)(a + (Math.random() * (b-a)));
 	}
 }

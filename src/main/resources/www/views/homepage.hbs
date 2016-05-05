@@ -30,15 +30,81 @@
 
 	<div class="container container-1">
 		<span class="panel panel-3 popular1">
-			POPULAR ITEM 1
+			<h1 class="item-name"><a href="/item/{{popularItem1.id}}">{{popularItem1.name}}</a></h1>
+			<div class="price">
+				<span class="sale-price">{{popularItem1.cost}}</span>
+			</div>
+			{{#if isUserLoggedIn}}
+				<form>
+					<input type="button" class="addToCartButton" data-item-id="{{popularItem1.id}}" value="Add to cart" />
+					<script type="text/javascript">
+						$("input.addToCartButton").each( function(index, button) {
+							$(button).click( function() {
+								var itemId = $(button).attr("data-item-id");
+								Primes.CartTracker.addToCart( itemId, 1 );
+							} );
+						} );
+					</script>
+				</form>
+			{{/if}}
+			<span>
+				<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/{{popularItem1.id}}" width="50" height="50" />
+				<span class="item-desc">
+					{{popularItem1.desc}}
+				</span>
+			</span>
 		</span>
 
 		<span class="panel panel-3 popular2">
-			POPULAR ITEM 2
+			<h1 class="item-name"><a href="/item/{{popularItem2.id}}">{{popularItem2.name}}</a></h1>
+			<div class="price">
+				<span class="sale-price">{{popularItem2.cost}}</span>
+			</div>
+			{{#if isUserLoggedIn}}
+				<form>
+					<input type="button" class="addToCartButton" data-item-id="{{popularItem2.id}}" value="Add to cart" />
+					<script type="text/javascript">
+						$("input.addToCartButton").each( function(index, button) {
+							$(button).click( function() {
+								var itemId = $(button).attr("data-item-id");
+								Primes.CartTracker.addToCart( itemId, 1 );
+							} );
+						} );
+					</script>
+				</form>
+			{{/if}}
+			<span>
+				<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/{{popularItem2.id}}" width="50" height="50" />
+				<span class="item-desc">
+					{{popularItem2.desc}}
+				</span>
+			</span>
 		</span>
 
 		<span class="panel panel-3 popular3">
-			POPULAR ITEM 3
+			<h1 class="item-name"><a href="/item/{{popularItem3.id}}">{{popularItem3.name}}</a></h1>
+			<div class="price">
+				<span class="sale-price">{{popularItem3.cost}}</span>
+			</div>
+			{{#if isUserLoggedIn}}
+				<form>
+					<input type="button" class="addToCartButton" data-item-id="{{popularItem3.id}}" value="Add to cart" />
+					<script type="text/javascript">
+						$("input.addToCartButton").each( function(index, button) {
+							$(button).click( function() {
+								var itemId = $(button).attr("data-item-id");
+								Primes.CartTracker.addToCart( itemId, 1 );
+							} );
+						} );
+					</script>
+				</form>
+			{{/if}}
+			<span>
+				<img class="item-pic" style="float: left; padding-right: 5px" src="/itemImage/{{popularItem3.id}}" width="50" height="50" />
+				<span class="item-desc">
+					{{popularItem3.desc}}
+				</span>
+			</span>
 		</span>
 	</div>
 </div>
