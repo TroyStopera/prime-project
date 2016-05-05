@@ -3,7 +3,12 @@ package lib.persistence.dao;
 import lib.persistence.DataAccessException;
 import lib.persistence.entities.Account;
 
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Optional;
 
 class AccountDAO implements Account.DAO {
@@ -13,6 +18,32 @@ class AccountDAO implements Account.DAO {
     AccountDAO(SQLiteDAO sqLiteDAO) {
         this.dao = sqLiteDAO;
     }
+
+	public List<Account> allAccounts() throws DataAccessException {
+		String query = "SELECT * FROM Account WHERE 1 = 1";
+		List<Account> accounts = new LinkedList<>();
+		dao.lock();
+		try {
+			PreparedStatement statement = dao.connection.prepareStatement(query);
+			statement.setQueryTimeout(30);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				long id = resultSet.getLong("id");
+				int type = resultSet.getInt("Type");
+				String username = resultSet.getString("Username");
+				String email = resultSet.getString("Email");
+				String pass = resultSet.getString("Pass");
+				Account account = new Account(type, username, email, pass);
+				dao.setId(account, id);
+				accounts.add(account);
+			}
+		} catch (SQLException e) {
+			throw new DataAccessException(e.getMessage());
+		} finally {
+			dao.unlock();
+		}
+		return accounts;
+	}
 
     @Override
     public Optional<Account> get(String email) throws DataAccessException {
@@ -128,4 +159,16 @@ class AccountDAO implements Account.DAO {
             dao.unlock();
         }
     }
+
+	//helper method for inflating Accounts
+	private Account fromResultSet(ResultSet resultSet) throws SQLException {
+		long id = resultSet.getLong("id");
+		int type = resultSet.getInt("Type");
+		String username = resultSet.getString("Username");
+		String email = resultSet.getString("Email");
+		String pass = resultSet.getString("Pass");
+		Account account = new Account(type, username, email, pass);
+		dao.setId(account, id);
+		return account;
+	}
 }

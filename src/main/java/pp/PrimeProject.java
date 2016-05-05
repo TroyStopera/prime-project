@@ -76,7 +76,8 @@ public class PrimeProject
 
 		staticRoute("/static", "/www/static");
 
-		get("/debug/", (req, res) -> useController( new DebugController.DashboardController(), req, res ) );
+		get("/debug", (req, res) -> useController( new DebugController.DashboardController(), req, res ) );
+		get("/debug/db/account", (req, res) -> useController( new DebugController.AccountDBViewer(), req, res ) );
 		get("/debug/db/item", (req, res) -> useController( new DebugController.ItemDBViewer(), req, res ) );
 
 		after((req, res) -> {

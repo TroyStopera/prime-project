@@ -1,0 +1,28 @@
+<h1>Account</h1>
+<table border="1">
+	<tr>
+		<th>id</th>
+		<th>type</th>
+		<th>username</th>
+		<th>email</th>
+		<th>password (salted &amp; hashed)</th>
+	</tr>
+
+	{{#each account}}
+		<tr>
+			<td>{{getId}}</td>
+			<td>{{getType}}</td>
+			<td>{{getUsername}}</td>
+			<td>{{getEmail}}</td>
+			<td>{{getPassword}}</td>
+		</tr>
+	{{/each}}
+
+	<tr>
+		<th>id</th>
+		<th>type</th>
+		<th>username</th>
+		<th>email</th>
+		<th>password (salted &amp; hashed)</th>
+	</tr>
+</table>
