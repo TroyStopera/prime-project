@@ -52,37 +52,6 @@ p {
 	font-size: 2em;
 }
 
-.foot {
-	margin-left: 200px;
-	
-	font-size: 15px;
-	font-family: 'Lato', sans-serif;
-}
-
-footer .row {
-  display: flex;
-  align-items: center;
-}
-footer {
-  font-size: 12px;
-  padding: 20px 0;
-}
-
-footer .col-sm-8 {
-  display: flex;
-  justify-content: flex-end;
-}
-
-
-
-footer ul {
-  list-style: none;
-}
-
-footer li img {
-  width: 30px;
-  height: 32px;
-}
 
 
 
