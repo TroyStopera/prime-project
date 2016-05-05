@@ -1,14 +1,31 @@
-footer {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-
-	display: block;
-	font-size: 0.75em;
-	text-align: left;
-	color: rgba(0, 0, 0, 0.25);
+.foot {
+	margin-left: 200px;
+	
+	font-size: 15px;
+	font-family: 'Lato', sans-serif;
 }
 
-footer * {
-	color: inherit;
+footer .row {
+  display: flex;
+  align-items: center;
+}
+footer {
+  font-size: 12px;
+  padding: 20px 0;
+}
+
+footer .col-sm-8 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+
+footer ul {
+  list-style: none;
+}
+
+footer li img {
+  width: 30px;
+  height: 32px;
 }
